@@ -5,25 +5,26 @@ import {
   ThirdSection,
   ImgContainer,
   UploadedImg,
-  DraggableContainer,
-  DraggableImg,
-  DraggableButton,
 } from "./styles";
 import Draggable from "react-draggable";
 import axios from "axios";
 import { useState } from "react";
 import PesoImg from "../../assets/peso.png";
 import PesoImg2 from "../../assets/pesoo.png";
+import DraggableContainer from "../DragglableContainer";
 
 export function Content() {
   // Hooks FirstSection
   const [selectedFile, setSelectedFile]: any = useState();
   const [image, setImage] = useState();
+  const [draggableImage, setDraggableImage]: any = useState([]);
   const [loading, setLoading] = useState(false);
   const [dragIsClicked, setDragIsClicked] = useState(false);
 
-  // Functions and Utils FirstSection
+  // Consts
   const apiUrl = "http://localhost:8000/upload/arquivo";
+
+  // Functions
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -69,24 +70,31 @@ export function Content() {
               <UploadedImg src={image} alt="Imagem carregada" />
             )}
           </ImgContainer>
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Draggable handle="#handle">
-              <DraggableContainer>
-                <DraggableButton id="handle" />
-                <DraggableImg src={PesoImg} />
-              </DraggableContainer>
-            </Draggable>
-            <Draggable handle="#handle">
-              <DraggableContainer>
-                <DraggableButton id="handle" />
-                <DraggableImg src={PesoImg2} />
-              </DraggableContainer>
-            </Draggable>
-          </div>
         </div>
       </FirstSection>
 
-      <SecondSection></SecondSection>
+      <SecondSection>
+        <button
+          style={{ height: "20px", width: "100px", marginTop: "10px" }}
+          onClick={() =>
+            setDraggableImage([
+              ...draggableImage,
+              <DraggableContainer componentClass="handle" />,
+            ])
+          }
+        >
+          Criar elemento
+        </button>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <Draggable handle=".handle">
+            <div>
+              {draggableImage.map((a: any, i: any) => (
+                <div key={i}>{a}</div>
+              ))}
+            </div>
+          </Draggable>
+        </div>
+      </SecondSection>
     </MainContainer>
   );
 }

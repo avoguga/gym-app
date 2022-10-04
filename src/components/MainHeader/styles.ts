@@ -7,7 +7,13 @@ export const HeaderContainer = styled.header<{isDale: boolean}>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  
+  position: fixed;
+  margin-bottom:0px;
+  height: 50px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   animation-name: ${props => (props.isDale ? `dele` : ``)};
   animation-iteration-count: infinite;
   animation-duration: 5s;

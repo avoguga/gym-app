@@ -17,7 +17,6 @@ function App() {
       >
         <MainHeader />
         <Content />
-        <Footer />
       </Context.Provider>
     </Layout>
   );

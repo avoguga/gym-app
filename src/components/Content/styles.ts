@@ -52,4 +52,5 @@ export const DraggableButton = styled.div`
   border-radius: 200px;
   background-color: red;
   padding-top: 10px;
+  cursor: move;
 `;
