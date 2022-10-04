@@ -5,8 +5,9 @@ import {
   ThirdSection,
   ImgContainer,
   UploadedImg,
-  DraggableBlock,
+  DraggableContainer,
   DraggableImg,
+  DraggableButton,
 } from "./styles";
 import Draggable from "react-draggable";
 import axios from "axios";
@@ -19,6 +20,7 @@ export function Content() {
   const [selectedFile, setSelectedFile]: any = useState();
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
+  const [dragIsClicked, setDragIsClicked] = useState(false);
 
   // Functions and Utils FirstSection
   const apiUrl = "http://localhost:8000/upload/arquivo";
@@ -67,16 +69,18 @@ export function Content() {
               <UploadedImg src={image} alt="Imagem carregada" />
             )}
           </ImgContainer>
-          <div style={{display: "flex", justifyContent: "space-around"}}>
-            <Draggable handle="aaa">
-              <DraggableBlock id="aaa">
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <Draggable handle="#handle">
+              <DraggableContainer>
+                <DraggableButton id="handle" />
                 <DraggableImg src={PesoImg} />
-              </DraggableBlock>
+              </DraggableContainer>
             </Draggable>
-            <Draggable>
-              <DraggableBlock>
+            <Draggable handle="#handle">
+              <DraggableContainer>
+                <DraggableButton id="handle" />
                 <DraggableImg src={PesoImg2} />
-              </DraggableBlock>
+              </DraggableContainer>
             </Draggable>
           </div>
         </div>

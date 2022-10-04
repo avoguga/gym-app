@@ -41,12 +41,15 @@ export const DraggableImg = styled.img`
   margin-top: 5px;
 `;
 
-export const DraggableBlock = styled.div`
+export const DraggableContainer = styled.div`
+
+`;
+
+
+export const DraggableButton = styled.div`
   height: 5px;
   width: 10px;
   border-radius: 200px;
   background-color: red;
   padding-top: 10px;
 `;
-
-
