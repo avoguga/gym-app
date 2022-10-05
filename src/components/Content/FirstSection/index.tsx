@@ -15,28 +15,26 @@ import { ImageUploadContext } from "../../../contexts/AppContext";
 import axios from "axios";
 
 function FirstSection() {
-  const { draggableImage, image, setDraggableImage, setLoading }: any =
-    useContext(ImageUploadContext);
+  const {
+    draggableImage,
+    image,
+    setDraggableImage,
+    setLoading,
+    images,
+    handleUpdate,
+  }: any = useContext(ImageUploadContext);
 
   // Consts
 
   const apiUrl = "http://localhost:8000/";
-  const client = axios.create({
-    baseURL: apiUrl,
-  });
 
   const [counter, setCounter] = useState(0);
   const [selectedFileByDrop, setSelectedFileByDrop] = useState<[File]>();
   const [selectedFileUrl, setSelectedFileUrl] = useState([]);
-  const [images, setImages] = useState([]);
 
   const onDrop = useCallback((acceptedFiles: any) => {
     setSelectedFileByDrop(acceptedFiles);
   }, []);
-
-  const fileName = selectedFileByDrop?.map((file) => {
-    return file;
-  });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -48,12 +46,6 @@ function FirstSection() {
     );
     setSelectedFileUrl(newImgUrls);
   }, [selectedFileByDrop]);
-
-  useEffect(() => {
-    client.get("arquivos").then((response) => {
-      setImages(response.data.resources);
-    });
-  }, []);
 
   const createDraggableComponent = () => {
     setDraggableImage([...draggableImage, counter]);
@@ -83,7 +75,6 @@ function FirstSection() {
     }
   };
 
-  console.log(images);
   return (
     <MainContainer>
       <form onSubmit={handleSubmit}>
@@ -108,7 +99,10 @@ function FirstSection() {
       </form>
 
       <br />
-      <Text>Imagens Disponiveis</Text>
+      <div style={{ display: "flex" }}>
+        <Text>Imagens Disponiveis</Text>
+        <button style={{marginLeft: "10px"}} onClick={handleUpdate}>Atualizar</button>
+      </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {images.map((image: any, key: number) => (
           <UploadedImgs src={image.url} alt="" key={key} />
