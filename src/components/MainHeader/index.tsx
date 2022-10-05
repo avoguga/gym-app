@@ -25,7 +25,7 @@ export function MainHeader() {
           <img
             src="https://portalaluno.cesmac.edu.br/FrameHTML/web/app/Edu/PortalEducacional/login/assets/img/logo-responsivo.png"
             alt="CESMAC"
-            style={{ width: "200px" }}
+            style={{ width: "150px", marginRight: "10px" }}
           />
         </a>
       </ThirdSectionDiv>

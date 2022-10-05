@@ -101,7 +101,9 @@ function FirstSection() {
       <br />
       <div style={{ display: "flex" }}>
         <Text>Imagens Disponiveis</Text>
-        <button style={{marginLeft: "10px"}} onClick={handleUpdate}>Atualizar</button>
+        <button style={{ marginLeft: "10px" }} onClick={handleUpdate}>
+          Atualizar
+        </button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {images.map((image: any, key: number) => (

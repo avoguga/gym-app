@@ -1,21 +1,10 @@
-import {
-  MainContainer,
-  SecondSection,
-  ThirdSection,
-  ImgContainer,
-  UploadedImg,
-  Text,
-  DropZone,
-  CreateElButton,
-  PreviewImg,
-} from "./styles";
-import Draggable from "react-draggable";
+import { MainContainer } from "./styles";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import DraggableContainer from "../DragglableContainer";
-import { useDropzone } from "react-dropzone";
+import { useState } from "react";
 import { ImageUploadContext } from "../../contexts/AppContext";
 import FirstSection from "./FirstSection";
+import SecondSection from "./SecondSection";
+
 export function Content() {
   // Hooks
   const [image, setImage] = useState();
@@ -32,7 +21,7 @@ export function Content() {
     client.get("arquivos").then((response) => {
       setImages(response.data.resources);
     });
-  }
+  };
 
   return (
     <ImageUploadContext.Provider
@@ -41,22 +30,13 @@ export function Content() {
         setDraggableImage,
         setLoading,
         images,
-        handleUpdate
+        handleUpdate,
+        image,
       }}
     >
       <MainContainer>
         <FirstSection />
-        <SecondSection>
-          <div style={{ display: "flex" }}>
-            <ImgContainer>
-              {loading == true ? (
-                <h3>Carregando...</h3>
-              ) : (
-                <UploadedImg src={image} alt="Imagem carregada" />
-              )}
-            </ImgContainer>
-          </div>
-        </SecondSection>
+        <SecondSection />
       </MainContainer>
     </ImageUploadContext.Provider>
   );
