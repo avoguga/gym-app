@@ -1,15 +1,6 @@
 import styled from "styled-components";
 
-export const MainContainer = styled.main`
-  grid-area: CT;
-  background-color: whitesmoke;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
-
-export const FirstSection = styled.div`
+export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -72,6 +63,11 @@ export const UploadButton = styled.button`
 `;
 
 export const PreviewImg = styled.img`
+  margin: 10px;
+  width: 150px;
+`;
+
+export const UploadedImgs = styled.img`
   margin: 10px;
   width: 150px;
 `;
