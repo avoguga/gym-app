@@ -10,22 +10,6 @@ export const MainContainer = styled.div`
   padding: 10px;
 `;
 
-export const SecondSection = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-`;
-
-export const ThirdSection = styled.div`
-  height: 100%;
-  width: 100%;
-`;
-
-export const ImgContainer = styled.div`
-  width: auto;
-  height: auto;
-`;
-
 export const UploadedImg = styled.img`
   width: 1000px;
   height: 100%;

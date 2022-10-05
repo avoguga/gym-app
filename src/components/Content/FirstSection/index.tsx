@@ -39,7 +39,7 @@ function FirstSection() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   useEffect(() => {
-    if (selectedFileByDrop?.length < 1) return;
+    if (selectedFileByDrop != null && selectedFileByDrop?.length < 1) return;
     const newImgUrls: any = [];
     selectedFileByDrop?.forEach((img: Blob | MediaSource) =>
       newImgUrls.push(URL.createObjectURL(img))
