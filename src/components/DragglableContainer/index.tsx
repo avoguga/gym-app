@@ -1,12 +1,12 @@
-import React from "react";
 import { DraggableButton, DraggableImg, Container } from "./styles";
 import PesoImg from "../../assets/meu.png";
 
 interface DraggableContainer {
   componentClass: string;
+  ref?: any;
 }
 
-export default function DraggableContainer({componentClass}: DraggableContainer) {
+ const DraggableContainer = ({componentClass}: DraggableContainer) => {
   return (
     <Container>
       <DraggableButton id={componentClass} />
@@ -15,3 +15,5 @@ export default function DraggableContainer({componentClass}: DraggableContainer)
     </Container>
   );
 }
+
+export default DraggableContainer;

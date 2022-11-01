@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
-import { ImageUploadContext } from "../../../contexts/AppContext";
 import { ImgContainer, MainContainer, UploadedImg } from "./styles";
 
-export default function SecondSection() {
-  const { loading, image }: any = useContext(ImageUploadContext);
+export default function SecondSection({ imgUrl, progress }) {
   return (
     <MainContainer>
       <ImgContainer>
-        {loading == true ? (
-          <h3>Carregando...</h3>
+        {imgUrl ? (
+          <UploadedImg src={imgUrl} alt="Imagem carregada" />
         ) : (
-          <UploadedImg src={image} alt="Imagem carregada" />
+          <div>
+            <h3>Carregue uma Img!</h3>
+            <progress value={progress} max="100"></progress>
+          </div>
         )}
       </ImgContainer>
     </MainContainer>

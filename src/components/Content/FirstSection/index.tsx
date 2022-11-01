@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { useDropzone } from "react-dropzone";
 import DraggableContainer from "../../DragglableContainer";
@@ -9,27 +9,49 @@ import {
   MainContainer,
   Text,
   UploadedImgs,
+  DragMe,
 } from "./styles";
 import { useContext } from "react";
 import { ImageUploadContext } from "../../../contexts/AppContext";
 import axios from "axios";
+import gsap from "gsap";
+import DragRotate from "gsap/Draggable";
+import { UploadedImg } from "../SecondSection/styles";
+import New from "../../DragglableContainer/new";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../firebase";
 
-function FirstSection() {
-  const {
-    draggableImage,
-    image,
-    setDraggableImage,
-    setLoading,
-    images,
-    handleUpdate,
-  }: any = useContext(ImageUploadContext);
+gsap.registerPlugin(DragRotate);
 
+function FirstSection({
+  imgUrl,
+  setImgUrl,
+  setProgress,
+  selectedFileByDrop,
+  setSelectedFileByDrop,
+  setDraggableImage,
+  draggableImage,
+}) {
   // Consts
 
   const apiUrl = "http://localhost:8000/";
 
+  // Hooks
+
+  const dragInstance: any = useRef(null);
+  const dragTarget = useRef(null);
+
+  useEffect(() => {
+    dragInstance.current = DragRotate.create(dragTarget.current, {
+      type: "rotation",
+      onDragEnd() {
+        console.log(this);
+      },
+    });
+  }, []);
+
   const [counter, setCounter] = useState(0);
-  const [selectedFileByDrop, setSelectedFileByDrop] = useState<[File]>();
+
   const [selectedFileUrl, setSelectedFileUrl] = useState([]);
 
   const onDrop = useCallback((acceptedFiles: any) => {
@@ -53,26 +75,35 @@ function FirstSection() {
   };
 
   const handleSubmit = async () => {
-    const formData = new FormData();
-    if (selectedFileByDrop) formData.append("file", selectedFileByDrop[0]);
+    event?.preventDefault();
+    const file = selectedFileByDrop[0];
+    if (!file) return;
 
-    try {
-      setLoading(true);
-      const response = await axios({
-        method: "post",
-        url: apiUrl + "upload/arquivo",
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }).then((res) => {
-        setLoading(false);
-      });
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    const storageRef = ref(storage, `images/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+        console.log("O arquivo está upando:", progress);
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          setImgUrl(url);
+        });
+      }
+    );
+  };
+
+  const handleUpdate = () => {
+    
   };
 
   return (
@@ -106,21 +137,20 @@ function FirstSection() {
         </button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {images.map((image: any, key: number) => (
-          <UploadedImgs src={image.url} alt="" key={key} />
-        ))}
+        <UploadedImgs src={imgUrl} alt="" />
       </div>
 
       <br />
       <CreateElButton onClick={() => createDraggableComponent()}>
         Haltere
       </CreateElButton>
+
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {draggableImage.map((a: any, i: any) => (
-          <Draggable handle={"#handle" + i}>
-            <div>
-              <DraggableContainer componentClass={"handle" + i} />
-            </div>
+        {draggableImage.map((obj: any, key: any) => (
+          <Draggable handle={"#handle" + key}>
+            <New>
+              <DraggableContainer componentClass={"handle" + key} />
+            </New>
           </Draggable>
         ))}
       </div>

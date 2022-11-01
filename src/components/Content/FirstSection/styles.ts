@@ -5,8 +5,24 @@ export const MainContainer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
-  width: 45%;
+  width: 370px;
   background-color: #222;
+  padding: 10px;
+
+  position: fixed;
+  top: 50px;
+  bottom: 0px;
+  left: 0px;
+`;
+
+export const DragMe = styled.div`
+  height: 100px;
+  width: 100px;
+  background: blue;
+  border-radius: 10px;
+  margin: 50px;
+  color: white;
+  font-size: 20px;
   padding: 10px;
 `;
 
@@ -17,7 +33,7 @@ export const UploadedImg = styled.img`
 
 export const Text = styled.p`
   font-size: 16px;
-  color: #FFF;
+  color: #fff;
 `;
 
 export const DropZone = styled.div`
@@ -27,7 +43,7 @@ export const DropZone = styled.div`
   height: 100px;
   width: 350px;
   border-radius: 5px;
-  font-weight:400;
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;

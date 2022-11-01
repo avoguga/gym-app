@@ -5,6 +5,7 @@ export const MainContainer = styled.div`
   height: 100%;
   width: 100%;
   padding: 10px;
+  margin-left: 370px;
 `;
 
 export const ImgContainer = styled.div`
@@ -13,7 +14,7 @@ export const ImgContainer = styled.div`
 `;
 
 export const UploadedImg = styled.img`
-  width: 1000px;
+  width: 100%;
   height: 100%;
 `;
 
