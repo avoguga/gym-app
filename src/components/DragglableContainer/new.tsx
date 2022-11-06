@@ -5,7 +5,7 @@ interface AppState {
   position: Position;
 }
 
-const New = ({ children }: PropsWithChildren) => {
+const New = ({ children}: PropsWithChildren ) => {
   const [appState, setAppState] = useState({
     position: {
       left: "100px",
@@ -20,14 +20,13 @@ const New = ({ children }: PropsWithChildren) => {
 
   const { position } = appState;
 
-  console.log(position)
-
   return (
     <PositionableContainer
     className="container"
     movable
     resizable
     rotatable
+    disabled={false}
     position={position}
     onUpdate={handleUpdate}
   >

@@ -8,7 +8,7 @@ export function Content() {
   // Hooks
   const [draggableImage, setDraggableImage] = useState(Array);
   const [progres, setProgress] = useState(0);
-  const [selectedFileByDrop, setSelectedFileByDrop] = useState<any>();
+  const [selectedFileByDrop, setSelectedFileByDrop] = useState<[File]>();
   const [imgUrl, setImgUrl] = useState("");
 
   return (

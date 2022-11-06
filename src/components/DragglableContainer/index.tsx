@@ -3,13 +3,14 @@ import PesoImg from "../../assets/meu.png";
 
 interface DraggableContainer {
   componentClass: string;
-  ref?: any;
+  dragRef?: any;
+  dragFunction(): any;
 }
 
- const DraggableContainer = ({componentClass}: DraggableContainer) => {
+ const DraggableContainer = ({componentClass, dragFunction }: DraggableContainer) => {
   return (
     <Container>
-      <DraggableButton id={componentClass} />
+      <DraggableButton onClick={() => dragFunction()} />
       <DraggableImg src={PesoImg} />
       <p>{}</p>
     </Container>

@@ -11,13 +11,18 @@ export const Container = styled.div`
   z-index: 100;
 `;
 
-export const DraggableButton = styled.div`
-  height: 5px;
-  width: 10px;
+export const DraggableButton = styled.button`
+  width: 15px;
   border-radius: 200px;
-  background-color: red;
+  background-color: #FF0000;
   padding-top: 10px;
-  cursor: move;
+  cursor: pointer;
+  position: relative;
+  bottom: 20px;
+  left: 42px;
+  :hover {
+    background-color: #ff9a9a;
+  }
 `;
 
 

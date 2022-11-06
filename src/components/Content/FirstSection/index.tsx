@@ -1,22 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, createRef } from "react";
 import Draggable from "react-draggable";
 import { useDropzone } from "react-dropzone";
 import DraggableContainer from "../../DragglableContainer";
 import {
   CreateElButton,
   DropZone,
-  PreviewImg,
   MainContainer,
   Text,
   UploadedImgs,
-  DragMe,
 } from "./styles";
-import { useContext } from "react";
-import { ImageUploadContext } from "../../../contexts/AppContext";
-import axios from "axios";
 import gsap from "gsap";
 import DragRotate from "gsap/Draggable";
-import { UploadedImg } from "../SecondSection/styles";
 import New from "../../DragglableContainer/new";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../firebase";
@@ -34,48 +28,15 @@ function FirstSection({
 }) {
   // Consts
 
-  const apiUrl = "http://localhost:8000/";
-
   // Hooks
 
-  const dragInstance: any = useRef(null);
-  const dragTarget = useRef(null);
-
-  useEffect(() => {
-    dragInstance.current = DragRotate.create(dragTarget.current, {
-      type: "rotation",
-      onDragEnd() {
-        console.log(this);
-      },
-    });
-  }, []);
-
+  const dragHalter: any = useRef([createRef()]);
+  
   const [counter, setCounter] = useState(0);
 
   const [selectedFileUrl, setSelectedFileUrl] = useState([]);
 
-  const onDrop = useCallback((acceptedFiles: any) => {
-    setSelectedFileByDrop(acceptedFiles);
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  useEffect(() => {
-    if (selectedFileByDrop != null && selectedFileByDrop?.length < 1) return;
-    const newImgUrls: any = [];
-    selectedFileByDrop?.forEach((img: Blob | MediaSource) =>
-      newImgUrls.push(URL.createObjectURL(img))
-    );
-    setSelectedFileUrl(newImgUrls);
-  }, [selectedFileByDrop]);
-
-  const createDraggableComponent = () => {
-    setDraggableImage([...draggableImage, counter]);
-    setCounter(counter + 1);
-  };
-
-  const handleSubmit = async () => {
-    event?.preventDefault();
+  const updateUploads = () => {
     const file = selectedFileByDrop[0];
     if (!file) return;
 
@@ -102,56 +63,76 @@ function FirstSection({
     );
   };
 
-  const handleUpdate = () => {
-    
+  const onDrop = useCallback((acceptedFiles: any) => {
+    setSelectedFileByDrop(acceptedFiles);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  useEffect(() => {
+    if (selectedFileByDrop != null && selectedFileByDrop?.length < 1) return;
+    const newImgUrls: any = [];
+    selectedFileByDrop?.forEach((img: Blob | MediaSource) =>
+      newImgUrls.push(URL.createObjectURL(img))
+    );
+    setSelectedFileUrl(newImgUrls);
+  }, [selectedFileByDrop]);
+
+  const createDraggableComponent = () => {
+    setCounter(counter + 1);
+    setDraggableImage([...draggableImage, counter]);
   };
+
+  const removeHalter = (index) => {
+    dragHalter.current[index].current.remove();
+  };
+
+  useEffect(() => {
+    if (!selectedFileByDrop) return;
+    updateUploads();
+  }, [selectedFileByDrop]);
 
   return (
     <MainContainer>
-      <form onSubmit={handleSubmit}>
-        {selectedFileUrl.length > 0 ? (
-          selectedFileUrl.map((imgSrc: string | undefined, i: any) => (
-            <PreviewImg src={imgSrc} key={i} />
-          ))
-        ) : (
-          <DropZone {...getRootProps()}>
-            <input type="file" {...getInputProps()} />
-            {isDragActive ? (
-              <p>Drop the files here ...</p>
-            ) : (
-              <Text>
-                Arraste aqui suas imagens, ou clique aqui para seleciona-las
-              </Text>
-            )}
-          </DropZone>
-        )}
+      <form>
+        <DropZone {...getRootProps()}>
+          <input type="file" {...getInputProps()} />
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <Text>
+              Arraste aqui suas imagens, ou clique aqui para seleciona-las
+            </Text>
+          )}
+        </DropZone>
+
         <br />
-        <input type="submit" value="Upload File" />
       </form>
 
       <br />
       <div style={{ display: "flex" }}>
         <Text>Imagens Disponiveis</Text>
-        <button style={{ marginLeft: "10px" }} onClick={handleUpdate}>
-          Atualizar
-        </button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <UploadedImgs src={imgUrl} alt="" />
       </div>
-
       <br />
       <CreateElButton onClick={() => createDraggableComponent()}>
         Haltere
       </CreateElButton>
 
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {draggableImage.map((obj: any, key: any) => (
-          <Draggable handle={"#handle" + key}>
-            <New>
-              <DraggableContainer componentClass={"handle" + key} />
-            </New>
-          </Draggable>
+        {draggableImage.map((obj: any, index: any) => (
+          <div ref={dragHalter.current[index]} key={index}>
+            <Draggable handle={"#handle" + index}>
+              <New>
+                <DraggableContainer
+                  dragFunction={() => removeHalter(index)}
+                  componentClass={"handle" + index}
+                />
+              </New>
+            </Draggable>
+          </div>
         ))}
       </div>
     </MainContainer>
