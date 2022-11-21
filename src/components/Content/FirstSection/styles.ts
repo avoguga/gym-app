@@ -103,10 +103,13 @@ export const PreviewImg = styled.img`
 `;
 
 export const UploadedImgsButton = styled.button`
-  
+  border: none;
+  background: none;
+  cursor: pointer;
 `;
 
 export const UploadedImgs = styled.img`
   margin: 5px;
   width: 100px;
+  height: 60px;
 `;

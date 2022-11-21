@@ -165,8 +165,7 @@ function FirstSection({
           style={{
             display: "flex",
             flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
+            marginLeft: "10px"
           }}
         >
           {imgUrlArray.map((urls, index) => (
@@ -174,16 +173,8 @@ function FirstSection({
               <UploadedImgs src={urls} key={index} alt="" />
             </UploadedImgsButton>
           ))}
-
-          {/* <UploadedImgs src={imgUrl} alt="" /> */}
-
-          <br />
-
-          <Text style={{ fontSize: 12, marginTop: "7px" }}>
-            Mostrar mais...
-          </Text>
         </div>
-
+        <Text style={{ fontSize: 12, marginTop: "7px" }}>Mostrar mais...</Text>
         <div
           style={{
             display: "flex",
