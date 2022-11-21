@@ -17,6 +17,7 @@ import {
   ScrollableContainer,
   Text,
   UploadedImgs,
+  UploadedImgsButton,
 } from "./styles";
 import gsap from "gsap";
 import DragRotate from "gsap/Draggable";
@@ -48,7 +49,7 @@ function FirstSection({
 
   // Hooks
 
-  const dragHalter: any = useRef([createRef()]);
+  const dragHalter: any = useRef([createRef(), createRef(), createRef()]);
 
   const [counter, setCounter] = useState(0);
   const [test, setTest]: any = useState();
@@ -115,14 +116,15 @@ function FirstSection({
     const storageImgRef = ref(storage, `images/`);
     listAll(storageImgRef)
       .then((res) => {
-        setImgUrlArray(res.items);
+        let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+        Promise.all(promises).then((urls) => {
+          setImgUrlArray(urls);
+        });
+        // setImgUrlArray(res.items);
         res.prefixes.forEach((folderRef) => {
           // console.log(folderRef);
           // All the prefixes under listRef.
           // You may call listAll() recursively on them.
-        });
-        res.items.forEach((itemRef) => {
-          // All the items under listRef.
         });
       })
       .catch((error) => {
@@ -130,6 +132,12 @@ function FirstSection({
         // Uh-oh, an error occurred!
       });
   }, []);
+
+  imgUrlArray.map((urls, index) => {
+    console.log(index);
+  });
+
+  console.log("oi");
 
   return (
     <MainContainer>
@@ -153,14 +161,28 @@ function FirstSection({
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Text style={{ fontSize: 18 }}>PLANOS DE FUNDO SALVOS</Text>
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {imgUrlArray.map((itemRef, key) => {
-            return console.log(itemRef);
-          })}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {imgUrlArray.map((urls, index) => (
+            <UploadedImgsButton onClick={() => setImgUrl(urls)}>
+              <UploadedImgs src={urls} key={index} alt="" />
+            </UploadedImgsButton>
+          ))}
 
-          <UploadedImgs src={imgUrl} alt="" />
+          {/* <UploadedImgs src={imgUrl} alt="" /> */}
+
+          <br />
+
+          <Text style={{ fontSize: 12, marginTop: "7px" }}>
+            Mostrar mais...
+          </Text>
         </div>
-        <br />
 
         <div
           style={{
@@ -170,7 +192,16 @@ function FirstSection({
             alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 18 }}>EQUIPAMENTOS</Text>
+          <div
+            style={{
+              backgroundColor: "#c90087",
+              width: "180px",
+              height: "35px",
+              marginTop: "20px",
+            }}
+          >
+            <Text style={{ fontSize: 18, marginTop: "7px" }}>EQUIPAMENTOS</Text>
+          </div>
           <br />
           <div style={{ position: "relative" }}>
             <InputIcon src={Lupa} />
@@ -182,12 +213,12 @@ function FirstSection({
           style={{
             display: "flex",
             flexWrap: "wrap",
-            marginBottom: "100px"
+            marginBottom: "100px",
           }}
         >
           <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Haltere" style={{ width: "150px" }} />
-            HALTERES
+            <img src={PesoImg} alt="Corda" style={{ width: "150px" }} />
+            CORDA
           </CreateElButton>
 
           <CreateElButton onClick={() => createDraggableComponent()}>
@@ -196,13 +227,17 @@ function FirstSection({
           </CreateElButton>
 
           <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Haltere" style={{ width: "150px" }} />
-            HALTERES
+            <img src={PesoImg} alt="Wall Ball" style={{ width: "150px" }} />
+            WALL BALL
           </CreateElButton>
 
           <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Haltere" style={{ width: "150px" }} />
-            HALTERES
+            <img
+              src={PesoImg}
+              alt="Faixa Elástica"
+              style={{ width: "150px" }}
+            />
+            FAIXA ELÁSTICA
           </CreateElButton>
 
           <CreateElButton onClick={() => createDraggableComponent()}>

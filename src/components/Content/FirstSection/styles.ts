@@ -102,7 +102,11 @@ export const PreviewImg = styled.img`
   width: 150px;
 `;
 
+export const UploadedImgsButton = styled.button`
+  
+`;
+
 export const UploadedImgs = styled.img`
-  margin: 10px;
-  width: 150px;
+  margin: 5px;
+  width: 100px;
 `;
