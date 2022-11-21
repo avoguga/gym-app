@@ -1,7 +1,5 @@
 import { MainContainer } from "./styles";
-import axios from "axios";
 import { useState } from "react";
-import { ImageUploadContext } from "../../contexts/AppContext";
 import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
 export function Content() {
@@ -10,6 +8,7 @@ export function Content() {
   const [progres, setProgress] = useState(0);
   const [selectedFileByDrop, setSelectedFileByDrop] = useState<[File]>();
   const [imgUrl, setImgUrl] = useState("");
+  const [imgUrlArray, setImgUrlArray] = useState([]);
 
   return (
     <MainContainer>
@@ -22,6 +21,8 @@ export function Content() {
         imgUrl={imgUrl}
         setImgUrl={setImgUrl}
         setProgress={setProgress}
+        setImgUrlArray={setImgUrlArray}
+        imgUrlArray={imgUrlArray}
       />
     </MainContainer>
   );

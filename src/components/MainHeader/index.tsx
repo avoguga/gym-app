@@ -17,7 +17,7 @@ export function MainHeader() {
   return (
     <HeaderContainer isDale={isDale}>
       <FirstSectionDiv>
-        <Text style={{fontSize: "30px"}}>Gym App</Text>
+        <Text style={{fontSize: "30px", margin: "10px", marginLeft: "30px"}}>GymApp</Text>
       </FirstSectionDiv>
       <SecondSectionDiv />
       <ThirdSectionDiv>
@@ -25,7 +25,7 @@ export function MainHeader() {
           <img
             src="https://portalaluno.cesmac.edu.br/FrameHTML/web/app/Edu/PortalEducacional/login/assets/img/logo-responsivo.png"
             alt="CESMAC"
-            style={{ width: "150px", marginRight: "10px" }}
+            style={{ width: "130px", marginRight: "30px" }}
           />
         </a>
       </ThirdSectionDiv>

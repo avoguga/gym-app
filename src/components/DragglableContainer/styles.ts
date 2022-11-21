@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 
 export const DraggableImg = styled.img`
-  width: 100px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   margin-top: 5px;
 `;
 

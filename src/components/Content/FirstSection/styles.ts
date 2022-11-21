@@ -2,17 +2,26 @@ import styled from "styled-components";
 
 export const MainContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   height: 100%;
-  width: 370px;
+  width: 380px;
   background-color: #222;
-  padding: 10px;
 
   position: fixed;
-  top: 50px;
+  top: 60px;
   bottom: 0px;
-  left: 0px;
+  right: 0px;
+`;
+
+export const ScrollableContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const DragMe = styled.div`
@@ -34,6 +43,7 @@ export const UploadedImg = styled.img`
 export const Text = styled.p`
   font-size: 16px;
   color: #fff;
+  text-align: center;
 `;
 
 export const DropZone = styled.div`
@@ -52,8 +62,33 @@ export const DropZone = styled.div`
 
 export const CreateElButton = styled.button`
   font-size: 16px;
-  width: 100px;
-  margin-top: 10px;
+  width: 150px;
+  margin: 10px;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  border: none;
+`;
+
+export const InputIcon = styled.img`
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 4px;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  filter: contrast(0%);
+`;
+
+export const EquipsInput = styled.input`
+  height: 35px;
+  width: 325px;
+  padding-left: 1.5rem;
+  border-radius: 30px;
+  background-color: #d9d9d9;
+  border: none;
+  text-indent: 10px;
+  margin: 10px;
 `;
 
 export const UploadButton = styled.button`

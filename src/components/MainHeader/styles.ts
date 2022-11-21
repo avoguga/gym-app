@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.header<{isDale: boolean}>`
   grid-area: MH;
-  background: ${props => (props.isDale ? `` : `linear-gradient(90deg, #32CD32 0%, #228B22 35%, #00171A 100%)`)};
+  background: #a8006e;
 
   display: flex;
   justify-content: space-between;
@@ -10,33 +10,10 @@ export const HeaderContainer = styled.header<{isDale: boolean}>`
   
   position: fixed;
   margin-bottom:0px;
-  height: 50px;
+  height: 60px;
   top: 0px;
   left: 0px;
   right: 0px;
-  animation-name: ${props => (props.isDale ? `dele` : ``)};
-  animation-iteration-count: infinite;
-  animation-duration: 5s;
-  @keyframes dele {
-    0% {
-      background-color: darkgoldenrod;
-    }
-    20% {
-      background-color: darkred;
-    }
-    40% {
-      background-color: darkblue;
-    }
-    60% {
-      background-color: darkmagenta;
-    }
-    80% {
-      background-color: darksalmon;
-    }
-    100% {
-      background-color: darkgoldenrod;
-    }
-  }
 `;
 export const FirstSectionDiv = styled.div`
   margin: 10px;
