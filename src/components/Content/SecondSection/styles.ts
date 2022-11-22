@@ -13,9 +13,13 @@ export const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (min-width: 1351px) {
-    width: 960px; 
+  @media (min-width: 960px) {
+    width: 960px;
     height: 500px;
+  }
+  @media (min-width: 1500px) {
+    width: 1500px;
+    height: 800px;
   }
   width: 1200px;
   height: 600px;
@@ -31,6 +35,9 @@ export const SendWorkoutButton = styled.button`
   width: 200px;
   height: 50px;
   border: none;
+  @media (min-width: 1500px) {
+    margin-left: 660px;
+  }
   margin-left: 370px;
 `;
 
