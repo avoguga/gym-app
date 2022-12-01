@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { useDropzone } from "react-dropzone";
 import DraggableContainer from "../../DragglableContainer";
@@ -29,6 +25,7 @@ import {
 import { storage } from "../../../firebase";
 import Lupa from "../../../assets/magnifier-glass_icon-icons.com_71148.svg";
 import PesoImg from "../../../assets/meu.png";
+import buttonElements from "./buttonElements";
 
 gsap.registerPlugin(DragRotate);
 
@@ -51,6 +48,9 @@ function FirstSection({
   const [counter, setCounter] = useState(0);
 
   const [selectedFileUrl, setSelectedFileUrl] = useState([]);
+
+  const [buttonElementsArray, setButtonsElementsArray] =
+    useState(buttonElements);
 
   const updateUploads = () => {
     const file = selectedFileByDrop[0];
@@ -125,7 +125,13 @@ function FirstSection({
   //     });
   // }, []);
 
-  
+  const filterButtonsElements = (e) => {
+    const search = e.target.value.toLowerCase();
+    const filteredButtonsElements = buttonElements.filter((elements) =>
+      elements.name.toLowerCase().includes(search)
+    );
+    setButtonsElementsArray(filteredButtonsElements);
+  };
 
   return (
     <MainContainer>
@@ -153,7 +159,7 @@ function FirstSection({
           style={{
             display: "flex",
             flexWrap: "wrap",
-            marginLeft: "10px"
+            marginLeft: "10px",
           }}
         >
           {imgUrlArray.map((urls, index) => (
@@ -184,7 +190,10 @@ function FirstSection({
           <br />
           <div style={{ position: "relative" }}>
             <InputIcon src={Lupa} />
-            <EquipsInput placeholder="Buscar equipamento..." />
+            <EquipsInput
+              placeholder="Buscar equipamento..."
+              onChange={(event) => filterButtonsElements(event)}
+            />
           </div>
         </div>
 
@@ -195,47 +204,19 @@ function FirstSection({
             marginBottom: "100px",
           }}
         >
-          <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Corda" style={{ width: "150px" }} />
-            CORDA
-          </CreateElButton>
-
-          <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Haltere" style={{ width: "150px" }} />
-            HALTERES
-          </CreateElButton>
-
-          <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Wall Ball" style={{ width: "150px" }} />
-            WALL BALL
-          </CreateElButton>
-
-          <CreateElButton onClick={() => createDraggableComponent()}>
-            <img
-              src={PesoImg}
-              alt="Faixa Elástica"
-              style={{ width: "150px" }}
-            />
-            FAIXA ELÁSTICA
-          </CreateElButton>
-
-          <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Haltere" style={{ width: "150px" }} />
-            HALTERES
-          </CreateElButton>
-          <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Haltere" style={{ width: "150px" }} />
-            HALTERES
-          </CreateElButton>
-          <CreateElButton onClick={() => createDraggableComponent()}>
-            <img src={PesoImg} alt="Haltere" style={{ width: "150px" }} />
-            HALTERES
-          </CreateElButton>
+          {buttonElementsArray.map((items, id) => (
+            <CreateElButton key={id} onClick={() => createDraggableComponent()}>
+              <img
+                src={items.img}
+                alt={items.name}
+                style={{ width: "150px" }}
+              />
+              {items.name}
+            </CreateElButton>
+          ))}
         </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-       
-        </div>
+        <div style={{ display: "flex", flexWrap: "wrap" }}></div>
       </ScrollableContainer>
     </MainContainer>
   );
