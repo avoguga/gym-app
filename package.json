@@ -22,7 +22,6 @@
     "react-draggable": "^4.4.5",
     "react-dropzone": "^14.2.2",
     "styled-components": "^5.3.6",
-    "use-react-screenshot": "^3.0.0"
   },
   "devDependencies": {
     "@types/gsap": "^3.0.0",
