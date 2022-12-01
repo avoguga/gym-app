@@ -52,6 +52,12 @@ function FirstSection({
   const [buttonElementsArray, setButtonsElementsArray] =
     useState(buttonElements);
 
+  const [visible, setVisible] = useState(3);
+
+  const showMoreImgs = () => {
+    setVisible((prevValue) => prevValue + 3);
+  };
+
   const updateUploads = () => {
     const file = selectedFileByDrop[0];
     if (!file) return;
@@ -104,26 +110,26 @@ function FirstSection({
     updateUploads();
   }, [selectedFileByDrop]);
 
-  // useEffect(() => {
-  //   const storageImgRef = ref(storage, `images/`);
-  //   listAll(storageImgRef)
-  //     .then((res) => {
-  //       let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
-  //       Promise.all(promises).then((urls) => {
-  //         setImgUrlArray(urls);
-  //       });
-  //       // setImgUrlArray(res.items);
-  //       res.prefixes.forEach((folderRef) => {
-  //         // console.log(folderRef);
-  //         // All the prefixes under listRef.
-  //         // You may call listAll() recursively on them.
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       // Uh-oh, an error occurred!
-  //     });
-  // }, []);
+  useEffect(() => {
+    const storageImgRef = ref(storage, `images/`);
+    listAll(storageImgRef)
+      .then((res) => {
+        let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+        Promise.all(promises).then((urls) => {
+          setImgUrlArray(urls);
+        });
+        // setImgUrlArray(res.items);
+        res.prefixes.forEach((folderRef) => {
+          // console.log(folderRef);
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        // Uh-oh, an error occurred!
+      });
+  }, []);
 
   const filterButtonsElements = (e) => {
     const search = e.target.value.toLowerCase();
@@ -162,13 +168,24 @@ function FirstSection({
             marginLeft: "10px",
           }}
         >
-          {imgUrlArray.map((urls, index) => (
+          {imgUrlArray.slice(0, visible).map((urls, index) => (
             <UploadedImgsButton onClick={() => setImgUrl(urls)}>
               <UploadedImgs src={urls} key={index} alt="" />
             </UploadedImgsButton>
           ))}
         </div>
-        <Text style={{ fontSize: 12, marginTop: "7px" }}>Mostrar mais...</Text>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            cursor: "pointer",
+            border: "none",
+          }}
+          onClick={() => showMoreImgs()}
+        >
+          <Text style={{ fontSize: 12, marginTop: "10px", fontWeight: "bold" }}>
+            Mostrar mais...
+          </Text>
+        </button>
         <div
           style={{
             display: "flex",
