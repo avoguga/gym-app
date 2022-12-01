@@ -12,6 +12,7 @@ export const Container = styled.div`
 `;
 
 export const DraggableButton = styled.button`
+  visibility:  ${props => props.disabled ? "hidden" : "visible"};
   width: 15px;
   border-radius: 200px;
   background-color: #FF0000;

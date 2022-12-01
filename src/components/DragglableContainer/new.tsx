@@ -5,7 +5,9 @@ interface AppState {
   position: Position;
 }
 
-const New = ({ children}: PropsWithChildren ) => {
+
+
+const New = ({ children, isDisable}: any ) => {
   const [appState, setAppState] = useState({
     position: {
       left: "100px",
@@ -26,7 +28,7 @@ const New = ({ children}: PropsWithChildren ) => {
     movable
     resizable
     rotatable
-    disabled={false}
+    disabled={isDisable}
     position={position}
     onUpdate={handleUpdate}
   >

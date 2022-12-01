@@ -5,12 +5,13 @@ interface DraggableContainer {
   componentClass: string;
   dragRef?: any;
   dragFunction(): any;
+  isDisable?: boolean;
 }
 
- const DraggableContainer = ({componentClass, dragFunction }: DraggableContainer) => {
+ const DraggableContainer = ({componentClass, dragFunction, isDisable }: DraggableContainer) => {
   return (
     <Container>
-      <DraggableButton onClick={() => dragFunction()} />
+      <DraggableButton disabled={isDisable} onClick={() => dragFunction()} />
       <DraggableImg src={PesoImg} />
       <p>{}</p>
     </Container>

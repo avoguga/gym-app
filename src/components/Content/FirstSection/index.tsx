@@ -1,9 +1,7 @@
-import React, {
+import {
   useCallback,
   useEffect,
-  useRef,
   useState,
-  createRef,
 } from "react";
 import Draggable from "react-draggable";
 import { useDropzone } from "react-dropzone";
@@ -44,15 +42,13 @@ function FirstSection({
   setSelectedFileByDrop,
   setDraggableImage,
   draggableImage,
+  dragHalter,
 }) {
   // Consts
 
   // Hooks
 
-  const dragHalter: any = useRef([createRef(), createRef(), createRef()]);
-
   const [counter, setCounter] = useState(0);
-  const [test, setTest]: any = useState();
 
   const [selectedFileUrl, setSelectedFileUrl] = useState([]);
 
@@ -103,41 +99,33 @@ function FirstSection({
     setDraggableImage([...draggableImage, counter]);
   };
 
-  const removeHalter = (index) => {
-    dragHalter.current[index].current.remove();
-  };
-
   useEffect(() => {
     if (!selectedFileByDrop) return;
     updateUploads();
   }, [selectedFileByDrop]);
 
-  useEffect(() => {
-    const storageImgRef = ref(storage, `images/`);
-    listAll(storageImgRef)
-      .then((res) => {
-        let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
-        Promise.all(promises).then((urls) => {
-          setImgUrlArray(urls);
-        });
-        // setImgUrlArray(res.items);
-        res.prefixes.forEach((folderRef) => {
-          // console.log(folderRef);
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        // Uh-oh, an error occurred!
-      });
-  }, []);
+  // useEffect(() => {
+  //   const storageImgRef = ref(storage, `images/`);
+  //   listAll(storageImgRef)
+  //     .then((res) => {
+  //       let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+  //       Promise.all(promises).then((urls) => {
+  //         setImgUrlArray(urls);
+  //       });
+  //       // setImgUrlArray(res.items);
+  //       res.prefixes.forEach((folderRef) => {
+  //         // console.log(folderRef);
+  //         // All the prefixes under listRef.
+  //         // You may call listAll() recursively on them.
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       // Uh-oh, an error occurred!
+  //     });
+  // }, []);
 
-  imgUrlArray.map((urls, index) => {
-    console.log(index);
-  });
-
-  console.log("oi");
+  
 
   return (
     <MainContainer>
@@ -246,18 +234,7 @@ function FirstSection({
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {draggableImage.map((obj: any, index: any) => (
-            <div ref={dragHalter.current[index]} key={index}>
-              <Draggable handle={"#handle" + index}>
-                <New>
-                  <DraggableContainer
-                    dragFunction={() => removeHalter(index)}
-                    componentClass={"handle" + index}
-                  />
-                </New>
-              </Draggable>
-            </div>
-          ))}
+       
         </div>
       </ScrollableContainer>
     </MainContainer>
