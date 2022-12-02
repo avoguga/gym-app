@@ -158,34 +158,47 @@ function FirstSection({
         </form>
 
         <br />
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Text style={{ fontSize: 18 }}>PLANOS DE FUNDO SALVOS</Text>
-        </div>
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap",
-            marginLeft: "10px",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          {imgUrlArray.slice(0, visible).map((urls, index) => (
+          <Text style={{ fontSize: 18 }}>PLANOS DE FUNDO SALVOS</Text>
+          <div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                marginLeft: "10px",
+              }}
+            >
+              {imgUrlArray.slice(0, visible).map((urls, index) => (
             <UploadedImgsButton onClick={() => setImgUrl(urls)}>
               <UploadedImgs src={urls} key={index} alt="" />
             </UploadedImgsButton>
           ))}
+            </div>
+          </div>
+          <button
+              style={{
+                backgroundColor: "transparent",
+                cursor: "pointer",
+                border: "none",
+              }}
+              onClick={() => showMoreImgs()}
+            >
+              <Text
+                title="Carregar mais imagens"
+                style={{ fontSize: 12, marginTop: "10px", fontWeight: "bold" }}
+              >
+                Mostrar mais...
+              </Text>
+            </button>
         </div>
-        <button
-          style={{
-            backgroundColor: "transparent",
-            cursor: "pointer",
-            border: "none",
-          }}
-          onClick={() => showMoreImgs()}
-        >
-          <Text style={{ fontSize: 12, marginTop: "10px", fontWeight: "bold" }}>
-            Mostrar mais...
-          </Text>
-        </button>
+
         <div
           style={{
             display: "flex",
@@ -219,18 +232,27 @@ function FirstSection({
             display: "flex",
             flexWrap: "wrap",
             marginBottom: "100px",
+            height: "500px",
+            width: "350px",
           }}
         >
-          {buttonElementsArray.map((items, id) => (
-            <CreateElButton key={id} onClick={() => createDraggableComponent()}>
-              <img
-                src={items.img}
-                alt={items.name}
-                style={{ width: "150px" }}
-              />
-              {items.name}
-            </CreateElButton>
-          ))}
+          {buttonElementsArray.map((items, id) =>
+            items.name ? (
+              <CreateElButton
+                key={id}
+                onClick={() => createDraggableComponent()}
+              >
+                <img
+                  src={items.img}
+                  alt={items.name}
+                  style={{ width: "150px" }}
+                />
+                {items.name}
+              </CreateElButton>
+            ) : (
+              <h1>Tem nada aqui nao</h1>
+            )
+          )}
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap" }}></div>

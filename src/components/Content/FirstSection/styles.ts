@@ -50,9 +50,7 @@ export const Text = styled.p`
 export const DropZone = styled.div`
   border: 1px dashed #fff;
   margin-top: 10px;
-  padding: 10px;
   height: 100px;
-  width: 350px;
   border-radius: 5px;
   font-weight: 400;
   display: flex;
@@ -64,6 +62,7 @@ export const DropZone = styled.div`
 export const CreateElButton = styled.button`
   font-size: 16px;
   width: 150px;
+  height: 120px;
   margin: 10px;
   background-color: #d9d9d9;
   border-radius: 20px;
@@ -107,6 +106,7 @@ export const UploadedImgsButton = styled.button`
   border: none;
   background: none;
   cursor: pointer;
+  padding: 0;
 `;
 
 export const UploadedImgs = styled.img`
