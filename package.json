@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@firebase/app": "^0.7.33",
+    "@ronchalant/react-loading-overlay": "^1.1.0",
     "@types/axios": "^0.14.0",
     "@types/styled-components": "^5.1.26",
     "axios": "^0.27.2",

@@ -6,6 +6,7 @@ import {
   MainContainer,
   SendWorkoutButton,
   UploadedImg,
+  StyledLoader,
 } from "./styles";
 import ImgIcon from "../../../assets/img-icon.jpeg";
 import html2canvas from "html2canvas";
@@ -16,6 +17,8 @@ export default function SecondSection({
   isDisable,
   setIsDisable,
 }) {
+  const [loading, setLoading] = useState(false);
+
   const ref = useRef<HTMLImageElement | null>(null);
 
   const downloadImage = (blob, fileName) => {
@@ -35,7 +38,6 @@ export default function SecondSection({
   };
 
   const exportAsImageAndRemoveStylesFromDraggableElements = async (element) => {
-
     const html = document.getElementsByTagName("html")[0];
     const body = document.getElementsByTagName("body")[0];
     let htmlWidth = html.clientWidth;
@@ -67,46 +69,57 @@ export default function SecondSection({
     // @ts-ignore
     body.style.width = null;
 
-    setIsDisable(false)
+    setIsDisable(false);
   };
 
   useEffect(() => {
-    if(isDisable) {
-      exportAsImageAndRemoveStylesFromDraggableElements(ref.current)
+    if (isDisable) {
+      exportAsImageAndRemoveStylesFromDraggableElements(ref.current);
     }
-  }, [isDisable])
-  
+  }, [isDisable]);
 
   return (
     <MainContainer>
-      <ImgContainer ref={ref}>
-        {draggable}
-        {!ImgIcon || imgUrl ? (
-          <UploadedImg
-            crossOrigin="anonymous"
-            src={imgUrl}
-            alt="Imagem carregada"
-          />
-        ) : (
-          <ImgTextContainer>
-            <img
-              style={{ width: "200px", margin: "10px" }}
-              src={ImgIcon}
-              alt=""
+      <StyledLoader
+        styles={{
+          spinner: (base) => ({
+            ...base,
+            width: "100px",
+            "& svg circle": {
+              stroke: "rgba(0, 255, 213, 0.5)",
+            },
+          }),
+        }}
+        classNamePrefix="MyLoader_"
+        active={true}
+        spinner
+        text="Carregando sua imagem..."
+      >
+        <ImgContainer ref={ref}>
+          {draggable}
+          {!ImgIcon || imgUrl ? (
+            <UploadedImg
+              crossOrigin="anonymous"
+              src={imgUrl}
+              alt="Imagem carregada"
             />
-            <h3 style={{ color: "white", fontSize: "30px" }}>
-              SELECIONE UMA IMAGEM COMO PLANO DE FUNDO
-            </h3>
-            {/* <progress value={progress} max="100"></progress> */}
-          </ImgTextContainer>
-        )}
-      </ImgContainer>
+          ) : (
+            <ImgTextContainer>
+              <img
+                style={{ width: "200px", margin: "10px" }}
+                src={ImgIcon}
+                alt=""
+              />
+              <h3 style={{ color: "white", fontSize: "30px" }}>
+                SELECIONE UMA IMAGEM COMO PLANO DE FUNDO
+              </h3>
+            </ImgTextContainer>
+          )}
+        </ImgContainer>
+      </StyledLoader>
+
       <div style={{}}>
-        <SendWorkoutButton
-          onClick={() =>
-            setIsDisable(true)
-          }
-        >
+        <SendWorkoutButton onClick={() => setIsDisable(true)}>
           ENVIAR TREINO
         </SendWorkoutButton>
         {/* <img width={"100%"} height={"100%"} src={image} alt={"Screenshot"} /> */}

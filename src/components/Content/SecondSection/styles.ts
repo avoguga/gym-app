@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import LoadingOverlay from "react-loading-overlay";
 
 export const MainContainer = styled.div`
   display: flex;
@@ -7,6 +8,22 @@ export const MainContainer = styled.div`
   height: 100%;
   width: 100%;
   padding: 10px;
+`;
+
+export const StyledLoader = styled(LoadingOverlay)`
+  @media (min-width: 960px) {
+    width: 960px;
+    height: 500px;
+  }
+  @media (min-width: 1500px) {
+    width: 1500px;
+    height: 800px;
+  }
+  width: 1200px;
+  height: 600px;
+  .MyLoader_overlay {
+    /* background: rgba(255, 0, 0, 0.5); */
+  }
 `;
 
 export const ImgContainer = styled.div`
