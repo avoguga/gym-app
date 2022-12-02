@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: [
-        "react-loading-overlay",
+        'react-loading-overlay',
       ],
     },
   },
