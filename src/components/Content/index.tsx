@@ -13,6 +13,7 @@ export function Content() {
   const [imgUrl, setImgUrl] = useState("");
   const [imgUrlArray, setImgUrlArray] = useState([]);
   const [isDisable, setIsDisable] = useState(false);
+
   
   const dragHalter: any = useRef([
     createRef(),

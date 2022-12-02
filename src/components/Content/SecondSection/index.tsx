@@ -10,6 +10,7 @@ import {
 } from "./styles";
 import ImgIcon from "../../../assets/img-icon.jpeg";
 import html2canvas from "html2canvas";
+
 export default function SecondSection({
   imgUrl,
   progress,
@@ -17,6 +18,7 @@ export default function SecondSection({
   isDisable,
   setIsDisable,
 }) {
+
   const [loading, setLoading] = useState(false);
 
   const ref = useRef<HTMLImageElement | null>(null);
@@ -78,6 +80,13 @@ export default function SecondSection({
     }
   }, [isDisable]);
 
+  useEffect(() => {
+    if (!ImgIcon || imgUrl) {
+      setLoading(true)
+    }
+  }, [imgUrl]);
+
+
   return (
     <MainContainer>
       <StyledLoader
@@ -91,7 +100,7 @@ export default function SecondSection({
           }),
         }}
         classNamePrefix="MyLoader_"
-        active={true}
+        active={loading}
         spinner
         text="Carregando sua imagem..."
       >
@@ -101,6 +110,7 @@ export default function SecondSection({
             <UploadedImg
               crossOrigin="anonymous"
               src={imgUrl}
+              onLoad={() => setLoading(false)}
               alt="Imagem carregada"
             />
           ) : (
