@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LoadingOverlay from "react-loading-overlay";
+import LoadingOverlay from "react-loading-overlay-ts";
 
 export const MainContainer = styled.div`
   display: flex;
