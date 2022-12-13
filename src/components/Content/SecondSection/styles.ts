@@ -30,18 +30,22 @@ export const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #c90087;
+
   @media (min-width: 960px) {
     width: 960px;
     height: 500px;
   }
+
   @media (min-width: 1500px) {
     width: 1500px;
     height: 800px;
   }
-  width: 1200px;
-  height: 600px;
-  background-color: #c90087;
+
+  width: 100%;
+  height: 100%;
 `;
+
 
 export const SendWorkoutButton = styled.button`
   margin: 10px;

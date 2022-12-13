@@ -10,6 +10,13 @@ import {
 } from "./styles";
 import ImgIcon from "../../../assets/img-icon.jpeg";
 import html2canvas from "html2canvas";
+import { storage } from "../../../firebase";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
 
 export default function SecondSection({
   imgUrl,
@@ -18,10 +25,9 @@ export default function SecondSection({
   isDisable,
   setIsDisable,
 }) {
-
   const [loading, setLoading] = useState(false);
 
-  const ref = useRef<HTMLImageElement | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
 
   const downloadImage = (blob, fileName) => {
     const fakeLink = window.document.createElement("a");
@@ -64,28 +70,47 @@ export default function SecondSection({
 
     const image = canvas.toDataURL("image/png", 1.0);
 
-    downloadImage(image, "filename");
+    // Caso queira baixar a img, descomente a linha abaixo
 
-    // @ts-ignore
-    html.style.width = null;
-    // @ts-ignore
-    body.style.width = null;
+    // downloadImage(image, "filename");
 
-    setIsDisable(false);
+    // Enviando pro Firebase
+
+    canvas.toBlob(function(blob: any){
+      const storageRef = ref(storage, `workouts/${"nome"}`);
+      const uploadTask = uploadBytesResumable(storageRef, blob);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          console.log("O arquivo está upando:", progress);
+        },
+        (error) => {
+          console.error(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log(url);
+          });
+        }
+      );
+    },"image/png")
+   
   };
 
   useEffect(() => {
     if (isDisable) {
-      exportAsImageAndRemoveStylesFromDraggableElements(ref.current);
+      exportAsImageAndRemoveStylesFromDraggableElements(imgRef.current);
     }
   }, [isDisable]);
 
   useEffect(() => {
     if (!ImgIcon || imgUrl) {
-      setLoading(true)
+      setLoading(true);
     }
   }, [imgUrl]);
-
 
   return (
     <MainContainer>
@@ -104,7 +129,7 @@ export default function SecondSection({
         spinner
         text="Carregando sua imagem..."
       >
-        <ImgContainer ref={ref}>
+        <ImgContainer ref={imgRef}>
           {draggable}
           {!ImgIcon || imgUrl ? (
             <UploadedImg

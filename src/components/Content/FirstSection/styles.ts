@@ -2,15 +2,14 @@ import styled from "styled-components";
 
 export const MainContainer = styled.div`
   display: flex;
+  flex-direction: column;
   height: 100%;
-  /* width: 28%; */
   width: 380px;
   background-color: #222;
-
   position: fixed;
   top: 60px;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
 `;
 
 export const ScrollableContainer = styled.div`

@@ -113,26 +113,26 @@ function FirstSection({
     updateUploads();
   }, [selectedFileByDrop]);
 
-  // useEffect(() => {
-  //   const storageImgRef = ref(storage, `images/`);
-  //   listAll(storageImgRef)
-  //     .then((res) => {
-  //       let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
-  //       Promise.all(promises).then((urls) => {
-  //         setImgUrlArray(urls);
-  //       });
-  //       // setImgUrlArray(res.items);
-  //       res.prefixes.forEach((folderRef) => {
-  //         // console.log(folderRef);
-  //         // All the prefixes under listRef.
-  //         // You may call listAll() recursively on them.
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       // Uh-oh, an error occurred!
-  //     });
-  // }, []);
+  useEffect(() => {
+    const storageImgRef = ref(storage, `images/`);
+    listAll(storageImgRef)
+      .then((res) => {
+        let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+        Promise.all(promises).then((urls) => {
+          setImgUrlArray(urls);
+        });
+        // setImgUrlArray(res.items);
+        res.prefixes.forEach((folderRef) => {
+          // console.log(folderRef);
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        // Uh-oh, an error occurred!
+      });
+  }, []);
 
   const filterButtonsElements = (e) => {
     const search = e.target.value.toLowerCase();
