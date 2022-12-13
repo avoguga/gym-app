@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { createRef, useCallback, useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { useDropzone } from "react-dropzone";
 import DraggableContainer from "../../DragglableContainer";
@@ -40,6 +40,8 @@ function FirstSection({
   setDraggableImage,
   draggableImage,
   dragHalter,
+  imgGeneretedFromDraggableImg,
+  setImgGeneretedFromDraggableImg
 }) {
   // Consts
 
@@ -100,9 +102,10 @@ function FirstSection({
     setSelectedFileUrl(newImgUrls);
   }, [selectedFileByDrop]);
 
-  const createDraggableComponent = () => {
+  const createDraggableComponent = (img) => {
     setCounter(counter + 1);
     setDraggableImage([...draggableImage, counter]);
+    setImgGeneretedFromDraggableImg([...imgGeneretedFromDraggableImg, img]);
   };
 
   useEffect(() => {
@@ -110,26 +113,26 @@ function FirstSection({
     updateUploads();
   }, [selectedFileByDrop]);
 
-  useEffect(() => {
-    const storageImgRef = ref(storage, `images/`);
-    listAll(storageImgRef)
-      .then((res) => {
-        let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
-        Promise.all(promises).then((urls) => {
-          setImgUrlArray(urls);
-        });
-        // setImgUrlArray(res.items);
-        res.prefixes.forEach((folderRef) => {
-          // console.log(folderRef);
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        // Uh-oh, an error occurred!
-      });
-  }, []);
+  // useEffect(() => {
+  //   const storageImgRef = ref(storage, `images/`);
+  //   listAll(storageImgRef)
+  //     .then((res) => {
+  //       let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+  //       Promise.all(promises).then((urls) => {
+  //         setImgUrlArray(urls);
+  //       });
+  //       // setImgUrlArray(res.items);
+  //       res.prefixes.forEach((folderRef) => {
+  //         // console.log(folderRef);
+  //         // All the prefixes under listRef.
+  //         // You may call listAll() recursively on them.
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       // Uh-oh, an error occurred!
+  //     });
+  // }, []);
 
   const filterButtonsElements = (e) => {
     const search = e.target.value.toLowerCase();
@@ -240,7 +243,7 @@ function FirstSection({
             items.name ? (
               <CreateElButton
                 key={id}
-                onClick={() => createDraggableComponent()}
+                onClick={() => createDraggableComponent(items.img)}
               >
                 <img
                   src={items.img}
