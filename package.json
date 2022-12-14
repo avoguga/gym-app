@@ -9,13 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/modal": "^2.2.5",
+    "@chakra-ui/react": "^2.4.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@firebase/app": "^0.7.33",
-    "@ronchalant/react-loading-overlay": "^1.1.0",
     "@types/axios": "^0.14.0",
     "@types/styled-components": "^5.1.26",
     "axios": "^0.27.2",
     "file-selector": "^0.6.0",
     "firebase": "9.13.0",
+    "framer-motion": "^7.8.0",
     "gsap": "^3.11.3",
     "html2canvas": "^1.4.1",
     "react": "^18.2.0",

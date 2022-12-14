@@ -18,6 +18,23 @@ import {
   listAll,
 } from "firebase/storage";
 
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+} from "@chakra-ui/react";
+
+import { useToast } from '@chakra-ui/react';
+
 export default function SecondSection({
   imgUrl,
   progress,
@@ -25,7 +42,16 @@ export default function SecondSection({
   isDisable,
   setIsDisable,
 }) {
+
+  const toast = useToast();
+
   const [loading, setLoading] = useState(false);
+
+  const [workoutName, setWorkoutName] = useState("");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef: any = useRef(null);
 
   const imgRef = useRef<HTMLImageElement | null>(null);
 
@@ -46,6 +72,7 @@ export default function SecondSection({
   };
 
   const exportAsImageAndRemoveStylesFromDraggableElements = async (element) => {
+    setLoading(true);
     const html = document.getElementsByTagName("html")[0];
     const body = document.getElementsByTagName("body")[0];
     let htmlWidth = html.clientWidth;
@@ -76,8 +103,8 @@ export default function SecondSection({
 
     // Enviando pro Firebase
 
-    canvas.toBlob(function(blob: any){
-      const storageRef = ref(storage, `workouts/${"nome"}`);
+    canvas.toBlob(function (blob: any) {
+      const storageRef = ref(storage, `workouts/${workoutName}`);
       const uploadTask = uploadBytesResumable(storageRef, blob);
       uploadTask.on(
         "state_changed",
@@ -89,20 +116,33 @@ export default function SecondSection({
         },
         (error) => {
           console.error(error);
+          toast({
+            title: `O sistema não pode enviar o treino!`,
+            status: "error",
+            isClosable: true,
+          })
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             console.log(url);
+            toast({
+              title: `O treino foi enviado!`,
+              status: "success",
+              isClosable: true,
+            })
           });
         }
       );
-    },"image/png")
-   
+    }, "image/png");
+
+    setIsDisable(false);
+    setLoading(false);
   };
 
   useEffect(() => {
     if (isDisable) {
       exportAsImageAndRemoveStylesFromDraggableElements(imgRef.current);
+      onClose();
     }
   }, [isDisable]);
 
@@ -154,9 +194,42 @@ export default function SecondSection({
       </StyledLoader>
 
       <div style={{}}>
-        <SendWorkoutButton onClick={() => setIsDisable(true)}>
+        {/* <SendWorkoutButton onClick={() => setIsDisable(true)}>
           ENVIAR TREINO
-        </SendWorkoutButton>
+        </SendWorkoutButton> */}
+
+        <SendWorkoutButton onClick={onOpen}>ENVIAR TREINO</SendWorkoutButton>
+
+        <Modal
+          initialFocusRef={initialRef}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Dê um nome para o treino!</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Nome do treino</FormLabel>
+                <Input ref={initialRef} placeholder="Nome do treino" onChange={(e) => setWorkoutName(e.target.value)}/>
+              </FormControl>
+{/* 
+              <FormControl mt={4}>
+                <FormLabel>Last name</FormLabel>
+                <Input placeholder="Last name" />
+              </FormControl> */}
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={() => setIsDisable(true)}>
+                Salvar Treino
+              </Button>
+              <Button onClick={onClose}>Cancelar</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+
         {/* <img width={"100%"} height={"100%"} src={image} alt={"Screenshot"} /> */}
       </div>
     </MainContainer>

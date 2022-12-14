@@ -1,7 +1,5 @@
-import { createRef, useCallback, useEffect, useRef, useState } from "react";
-import Draggable from "react-draggable";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import DraggableContainer from "../../DragglableContainer";
 import {
   CreateElButton,
   DropZone,
@@ -15,16 +13,16 @@ import {
 } from "./styles";
 import gsap from "gsap";
 import DragRotate from "gsap/Draggable";
-import New from "../../DragglableContainer/new";
 import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
   listAll,
+  updateMetadata,
+  getMetadata,
 } from "firebase/storage";
 import { storage } from "../../../firebase";
 import Lupa from "../../../assets/magnifier-glass_icon-icons.com_71148.svg";
-import PesoImg from "../../../assets/meu.png";
 import buttonElements from "./buttonElements";
 
 gsap.registerPlugin(DragRotate);
@@ -41,13 +39,15 @@ function FirstSection({
   draggableImage,
   dragHalter,
   imgGeneretedFromDraggableImg,
-  setImgGeneretedFromDraggableImg
+  setImgGeneretedFromDraggableImg,
 }) {
   // Consts
 
   // Hooks
 
   const [counter, setCounter] = useState(0);
+
+  const [cacheUrlsArray, setCacheUrlsArray]: any = useState([]);
 
   const [selectedFileUrl, setSelectedFileUrl] = useState([]);
 
@@ -59,6 +59,7 @@ function FirstSection({
   const showMoreImgs = () => {
     setVisible((prevValue) => prevValue + 3);
   };
+
 
   const updateUploads = () => {
     const file = selectedFileByDrop[0];
@@ -113,26 +114,99 @@ function FirstSection({
     updateUploads();
   }, [selectedFileByDrop]);
 
+  // useEffect(() => {
+  //   caches.open("imgs").then((cache) => {
+  //     cache.matchAll().then((res) => {
+  //       res.forEach((img) => {
+  //         img.blob().then((blob) => {
+  //           const url = URL.createObjectURL(blob);
+  //           setCacheUrlsArray((prev) => [...prev, url]);
+  //         });
+  //       });
+  //     });
+  //   });
+
+  //   const storageImgRef = ref(storage, `images/`);
+  //   if (cacheUrlsArray.length < 0) {
+  //     listAll(storageImgRef)
+  //       .then((res) => {
+  //         let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+  //         Promise.all(promises).then((urls) => {
+  //           caches.open("imgs").then((cache) => {
+  //             cache.addAll(urls);
+  //             cache.matchAll().then((res) => {
+  //               res.forEach((img) => {
+  //                 setCacheUrlsArray((prev) => [...prev, img.url]);
+  //               });
+  //             });
+  //           });
+  //           setImgUrlArray(urls);
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } else {
+  //     cacheUrlsArray.forEach((url) => {
+  //       setImgUrlArray((prev) => [...prev, url]);
+  //     });
+  //   }
+  // }, []);
+
+
+  useEffect(() => {
+    caches.open("imgs").then((cache) => {
+      cache.matchAll().then((res) => {
+        res.forEach((img) => {
+          img.blob().then((blob) => {
+            const url = URL.createObjectURL(blob);
+            setCacheUrlsArray((prev) => [...prev, url]);
+            setImgUrlArray((prev) => [...prev, url]);
+          });
+        });
+      });
+    });
+
+    const storageImgRef = ref(storage, `images/`);
+    if (cacheUrlsArray.length < 0) {
+      listAll(storageImgRef)
+        .then((res) => {
+          let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+          Promise.all(promises)
+            .then((urls) => {
+              caches.open("imgs").then((cache) => {
+                cache.addAll(urls);
+                setImgUrlArray(urls);
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+    } else {
+      setImgUrlArray(cacheUrlsArray);
+    }
+  }, []);
+
   useEffect(() => {
     const storageImgRef = ref(storage, `images/`);
     listAll(storageImgRef)
       .then((res) => {
         let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
         Promise.all(promises).then((urls) => {
-          setImgUrlArray(urls);
-        });
-        // setImgUrlArray(res.items);
-        res.prefixes.forEach((folderRef) => {
-          // console.log(folderRef);
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
+          if (urls !== imgUrlArray) {
+            caches.open("imgs").then((cache) => {
+              cache.addAll(urls);
+            });
+            setImgUrlArray(urls);
+          }
         });
       })
       .catch((error) => {
         console.log(error);
-        // Uh-oh, an error occurred!
       });
   }, []);
+
 
   const filterButtonsElements = (e) => {
     const search = e.target.value.toLowerCase();
@@ -179,27 +253,27 @@ function FirstSection({
               }}
             >
               {imgUrlArray.slice(0, visible).map((urls, index) => (
-            <UploadedImgsButton onClick={() => setImgUrl(urls)}>
-              <UploadedImgs src={urls} key={index} alt="" />
-            </UploadedImgsButton>
-          ))}
+                <UploadedImgsButton onClick={() => setImgUrl(urls)}>
+                  <UploadedImgs src={urls} key={index} alt="" />
+                </UploadedImgsButton>
+              ))}
             </div>
           </div>
           <button
-              style={{
-                backgroundColor: "transparent",
-                cursor: "pointer",
-                border: "none",
-              }}
-              onClick={() => showMoreImgs()}
+            style={{
+              backgroundColor: "transparent",
+              cursor: "pointer",
+              border: "none",
+            }}
+            onClick={() => showMoreImgs()}
+          >
+            <Text
+              title="Carregar mais imagens"
+              style={{ fontSize: 12, marginTop: "10px", fontWeight: "bold" }}
             >
-              <Text
-                title="Carregar mais imagens"
-                style={{ fontSize: 12, marginTop: "10px", fontWeight: "bold" }}
-              >
-                Mostrar mais...
-              </Text>
-            </button>
+              Mostrar mais...
+            </Text>
+          </button>
         </div>
 
         <div

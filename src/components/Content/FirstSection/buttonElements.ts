@@ -2,6 +2,8 @@ import PesoImg from "../../../assets/meu.png";
 import halter10 from "../../../assets/halter10.png";
 import corda from "../../../assets/corda.png";
 import FaixaElatica from "../../../assets/faixaelastica.png";
+import aaa from "../../../assets/15.png";
+import Caixa from "../../../assets/10.png";
 
 
 export default  [
@@ -15,7 +17,7 @@ export default  [
     {
         id: 2,
         name: "CORDA",
-        img: PesoImg,
+        img: aaa,
         function: ""
     },
     {
@@ -44,8 +46,8 @@ export default  [
     },
     {
         id: 7,
-        name: "FAIXA ELÁSTICA",
-        img: FaixaElatica,
+        name: "CAIXA",
+        img: Caixa,
         function: ""
     },
     
