@@ -10,44 +10,44 @@ export const MainContainer = styled.div`
   padding: 10px;
 `;
 
-export const StyledLoader = styled(LoadingOverlay)`
+export const StyledLoader = styled(LoadingOverlay)<{ isVisible: boolean }>`
   @media (min-width: 960px) {
-    width: 960px;
+    width: ${(props) => props.isVisible ? "960px" : "100%"};
     height: 500px;
   }
   @media (min-width: 1500px) {
-    width: 1200px;
+    width: ${(props) => props.isVisible ? "1200px" : "100%"};
     height: 600px;
   }
   @media (min-width: 1900px) {
-    width: 1500px;
+    width: ${(props) => props.isVisible ? "1500px" : "100%"};
     height: 800px;
   }
-  width: 1200px;
+  width: ${(props) => props.isVisible ? "1200px" : "100%"};
   height: 600px;
   .MyLoader_overlay {
     /* background: rgba(255, 0, 0, 0.5); */
   }
 `;
 
-export const ImgContainer = styled.div`
+export const ImgContainer = styled.div<{ isVisible: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #c90087;
 
   @media (min-width: 960px) {
-    width: 960px;
+    width: ${(props) => props.isVisible ? "960px" : "100%"};
     height: 500px;
   }
 
   @media (min-width: 1500px) {
-    width: 1100px;
+    width: ${(props) => props.isVisible ? "1100px" : "100%"};
     height: 600px;
   }
 
   @media (min-width: 1900px) {
-    width: 1500px;
+    width: ${(props) => props.isVisible ? "1500px" : "100%"};
     height: 800px;
   }
 
@@ -56,7 +56,7 @@ export const ImgContainer = styled.div`
 `;
 
 
-export const SendWorkoutButton = styled.button`
+export const SendWorkoutButton = styled.button<{ isVisible: boolean }>`
   margin: 10px;
   background-color: #c90087;
   color: white;
@@ -66,12 +66,12 @@ export const SendWorkoutButton = styled.button`
   height: 50px;
   border: none;
   @media (min-width: 1500px) {
-    margin-left: 450px;
+    margin-left: ${(props) => props.isVisible ? "450px" : "650px"};
   }
   @media (min-width: 1900px) {
-    margin-left: 660px;
+    margin-left: ${(props) => props.isVisible ? "650px" : "850px"};
   }
-  margin-left: 370px;
+  margin-left: ${(props) => props.isVisible ? "370px" : "500px"};
 `;
 
 export const ImgTextContainer = styled.div`

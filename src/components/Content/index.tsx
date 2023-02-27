@@ -15,6 +15,8 @@ export function Content() {
   const [imgUrlArray, setImgUrlArray] = useState([]);
   const [isDisable, setIsDisable] = useState(false);
   const [aaaa, setAaaa] = useState();
+  const [isVisible, setIsVisible] = useState(true);
+
 
   const [imgGeneretedFromDraggableImg, setImgGeneretedFromDraggableImg] =
     useState([]);
@@ -67,6 +69,8 @@ export function Content() {
         draggable={draggable}
         isDisable={isDisable}
         setIsDisable={setIsDisable}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
       />
       <FirstSection
         draggableImage={draggableImage}
@@ -81,6 +85,8 @@ export function Content() {
         dragHalter={dragHalter}
         imgGeneretedFromDraggableImg={imgGeneretedFromDraggableImg}
         setImgGeneretedFromDraggableImg={setImgGeneretedFromDraggableImg}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
       />
     </MainContainer>
   );

@@ -44,6 +44,8 @@ function FirstSection({
   dragHalter,
   imgGeneretedFromDraggableImg,
   setImgGeneretedFromDraggableImg,
+  isVisible,
+  setIsVisible,
 }) {
   // Consts
 
@@ -59,8 +61,6 @@ function FirstSection({
     useState(buttonElements);
 
   const [visible, setVisible] = useState(3);
-
-  const [isVisible, setIsVisible] = useState(true);
 
   const hideComponent = () => {
     setIsVisible(!isVisible);

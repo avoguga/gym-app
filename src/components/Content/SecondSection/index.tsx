@@ -41,6 +41,8 @@ export default function SecondSection({
   draggable,
   isDisable,
   setIsDisable,
+  isVisible,
+  setIsVisible,
 }) {
 
   const toast = useToast();
@@ -155,6 +157,7 @@ export default function SecondSection({
   return (
     <MainContainer>
       <StyledLoader
+        isVisible={isVisible}
         styles={{
           spinner: (base) => ({
             ...base,
@@ -169,7 +172,7 @@ export default function SecondSection({
         spinner
         text="Carregando sua imagem..."
       >
-        <ImgContainer ref={imgRef}>
+        <ImgContainer isVisible={isVisible} ref={imgRef}>
           {draggable}
           {!ImgIcon || imgUrl ? (
             <UploadedImg
@@ -198,7 +201,7 @@ export default function SecondSection({
           ENVIAR TREINO
         </SendWorkoutButton> */}
 
-        <SendWorkoutButton onClick={onOpen}>ENVIAR TREINO</SendWorkoutButton>
+        <SendWorkoutButton isVisible={isVisible} onClick={onOpen}>ENVIAR TREINO</SendWorkoutButton>
 
         <Modal
           initialFocusRef={initialRef}
