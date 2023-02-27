@@ -70,6 +70,13 @@ function FirstSection({
     setVisible((prevValue) => prevValue + 3);
   };
 
+  const showLessImgs = () => {
+    setVisible((prevValue) => {
+      if (prevValue <= 3) return prevValue;
+      return prevValue - 3;
+    });
+  };
+
   const updateUploads = () => {
     const file = selectedFileByDrop[0];
     if (!file) return;
@@ -176,13 +183,14 @@ function FirstSection({
     });
 
     const storageImgRef = ref(storage, `images/`);
-    if (cacheUrlsArray.length < 0) {
+    if (cacheUrlsArray.length === 0) {
       listAll(storageImgRef).then((res) => {
         let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
         Promise.all(promises)
           .then((urls) => {
             caches.open("imgs").then((cache) => {
               cache.addAll(urls);
+              setCacheUrlsArray(urls);
               setImgUrlArray(urls);
             });
           })
@@ -272,25 +280,47 @@ function FirstSection({
                     ))}
                   </div>
                 </div>
-                <button
-                  style={{
-                    backgroundColor: "transparent",
-                    cursor: "pointer",
-                    border: "none",
-                  }}
-                  onClick={() => showMoreImgs()}
-                >
-                  <Text
-                    title="Carregar mais imagens"
+                <div>
+                  <button
                     style={{
-                      fontSize: 12,
-                      marginTop: "10px",
-                      fontWeight: "bold",
+                      backgroundColor: "transparent",
+                      cursor: "pointer",
+                      border: "none",
+                      marginRight: "20px",
                     }}
+                    onClick={() => showMoreImgs()}
                   >
-                    Mostrar mais...
-                  </Text>
-                </button>
+                    <Text
+                      title="Carregar mais imagens"
+                      style={{
+                        fontSize: 12,
+                        marginTop: "10px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Mostrar mais...
+                    </Text>
+                  </button>
+                  <button
+                    style={{
+                      backgroundColor: "transparent",
+                      cursor: "pointer",
+                      border: "none",
+                    }}
+                    onClick={() => showLessImgs()}
+                  >
+                    <Text
+                      title="Carregar menos imagens"
+                      style={{
+                        fontSize: 12,
+                        marginTop: "10px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Mostrar menos...
+                    </Text>
+                  </button>
+                </div>
               </div>
 
               <div
