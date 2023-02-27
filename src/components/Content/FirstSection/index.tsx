@@ -4,9 +4,11 @@ import {
   CreateElButton,
   DropZone,
   EquipsInput,
+  HideButton,
   InputIcon,
   MainContainer,
   ScrollableContainer,
+  ShowButton,
   Text,
   UploadedImgs,
   UploadedImgsButton,
@@ -24,6 +26,8 @@ import {
 import { storage } from "../../../firebase";
 import Lupa from "../../../assets/magnifier-glass_icon-icons.com_71148.svg";
 import buttonElements from "./buttonElements";
+import RightArrow from "../../../assets/left-arrow-svgrepo-com.svg";
+import LeftArrow from "../../../assets/right-arrow-svgrepo-com.svg";
 
 gsap.registerPlugin(DragRotate);
 
@@ -56,10 +60,15 @@ function FirstSection({
 
   const [visible, setVisible] = useState(3);
 
+  const [isVisible, setIsVisible] = useState(true);
+
+  const hideComponent = () => {
+    setIsVisible(!isVisible);
+  };
+
   const showMoreImgs = () => {
     setVisible((prevValue) => prevValue + 3);
   };
-
 
   const updateUploads = () => {
     const file = selectedFileByDrop[0];
@@ -153,7 +162,6 @@ function FirstSection({
   //   }
   // }, []);
 
-
   useEffect(() => {
     caches.open("imgs").then((cache) => {
       cache.matchAll().then((res) => {
@@ -169,20 +177,19 @@ function FirstSection({
 
     const storageImgRef = ref(storage, `images/`);
     if (cacheUrlsArray.length < 0) {
-      listAll(storageImgRef)
-        .then((res) => {
-          let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
-          Promise.all(promises)
-            .then((urls) => {
-              caches.open("imgs").then((cache) => {
-                cache.addAll(urls);
-                setImgUrlArray(urls);
-              });
-            })
-            .catch((error) => {
-              console.log(error);
+      listAll(storageImgRef).then((res) => {
+        let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
+        Promise.all(promises)
+          .then((urls) => {
+            caches.open("imgs").then((cache) => {
+              cache.addAll(urls);
+              setImgUrlArray(urls);
             });
-        });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
     } else {
       setImgUrlArray(cacheUrlsArray);
     }
@@ -207,7 +214,6 @@ function FirstSection({
       });
   }, []);
 
-
   const filterButtonsElements = (e) => {
     const search = e.target.value.toLowerCase();
     const filteredButtonsElements = buttonElements.filter((elements) =>
@@ -217,124 +223,144 @@ function FirstSection({
   };
 
   return (
-    <MainContainer id="test">
-      <ScrollableContainer>
-        <form>
-          <DropZone {...getRootProps()}>
-            <input type="file" {...getInputProps()} />
-            {isDragActive ? (
-              <p>Drop the files here ...</p>
-            ) : (
-              <Text>
-                Arraste aqui suas imagens, ou clique aqui para seleciona-las
-              </Text>
-            )}
-          </DropZone>
+    <>
+      {isVisible ? (
+        <>
+          <HideButton onClick={hideComponent}>
+            <img src={LeftArrow} alt="" />
+          </HideButton>
+          <MainContainer id="test">
+            <ScrollableContainer>
+              <form>
+                <DropZone {...getRootProps()}>
+                  <input type="file" {...getInputProps()} />
+                  {isDragActive ? (
+                    <p>Drop the files here ...</p>
+                  ) : (
+                    <Text>
+                      Arraste aqui suas imagens, ou clique aqui para
+                      seleciona-las
+                    </Text>
+                  )}
+                </DropZone>
 
-          <br />
-        </form>
+                <br />
+              </form>
 
-        <br />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontSize: 18 }}>PLANOS DE FUNDO SALVOS</Text>
-          <div>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                marginLeft: "10px",
-              }}
-            >
-              {imgUrlArray.slice(0, visible).map((urls, index) => (
-                <UploadedImgsButton onClick={() => setImgUrl(urls)}>
-                  <UploadedImgs src={urls} key={index} alt="" />
-                </UploadedImgsButton>
-              ))}
-            </div>
-          </div>
-          <button
-            style={{
-              backgroundColor: "transparent",
-              cursor: "pointer",
-              border: "none",
-            }}
-            onClick={() => showMoreImgs()}
-          >
-            <Text
-              title="Carregar mais imagens"
-              style={{ fontSize: 12, marginTop: "10px", fontWeight: "bold" }}
-            >
-              Mostrar mais...
-            </Text>
-          </button>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#c90087",
-              width: "180px",
-              height: "35px",
-              marginTop: "20px",
-            }}
-          >
-            <Text style={{ fontSize: 18, marginTop: "7px" }}>EQUIPAMENTOS</Text>
-          </div>
-          <br />
-          <div style={{ position: "relative" }}>
-            <InputIcon src={Lupa} />
-            <EquipsInput
-              placeholder="Buscar equipamento..."
-              onChange={(event) => filterButtonsElements(event)}
-            />
-          </div>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            marginBottom: "100px",
-            height: "500px",
-            width: "350px",
-          }}
-        >
-          {buttonElementsArray.map((items, id) =>
-            items.name ? (
-              <CreateElButton
-                key={id}
-                onClick={() => createDraggableComponent(items.img)}
+              <br />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
               >
-                <img
-                  src={items.img}
-                  alt={items.name}
-                  style={{ width: "150px" }}
-                />
-                {items.name}
-              </CreateElButton>
-            ) : (
-              <h1>Tem nada aqui nao</h1>
-            )
-          )}
-        </div>
+                <Text style={{ fontSize: 18 }}>PLANOS DE FUNDO SALVOS</Text>
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {imgUrlArray.slice(0, visible).map((urls, index) => (
+                      <UploadedImgsButton onClick={() => setImgUrl(urls)}>
+                        <UploadedImgs src={urls} key={index} alt="" />
+                      </UploadedImgsButton>
+                    ))}
+                  </div>
+                </div>
+                <button
+                  style={{
+                    backgroundColor: "transparent",
+                    cursor: "pointer",
+                    border: "none",
+                  }}
+                  onClick={() => showMoreImgs()}
+                >
+                  <Text
+                    title="Carregar mais imagens"
+                    style={{
+                      fontSize: 12,
+                      marginTop: "10px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Mostrar mais...
+                  </Text>
+                </button>
+              </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap" }}></div>
-      </ScrollableContainer>
-    </MainContainer>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: "#c90087",
+                    width: "180px",
+                    height: "35px",
+                    marginTop: "20px",
+                  }}
+                >
+                  <Text style={{ fontSize: 18, marginTop: "7px" }}>
+                    EQUIPAMENTOS
+                  </Text>
+                </div>
+                <br />
+                <div style={{ position: "relative" }}>
+                  <InputIcon src={Lupa} />
+                  <EquipsInput
+                    placeholder="Buscar equipamento..."
+                    onChange={(event) => filterButtonsElements(event)}
+                  />
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  marginBottom: "100px",
+                  height: "500px",
+                  width: "350px",
+                }}
+              >
+                {buttonElementsArray.map((items, id) =>
+                  items.name ? (
+                    <CreateElButton
+                      key={id}
+                      onClick={() => createDraggableComponent(items.img)}
+                    >
+                      <img
+                        src={items.img}
+                        alt={items.name}
+                        style={{ width: "150px" }}
+                      />
+                      {items.name}
+                    </CreateElButton>
+                  ) : (
+                    <h1>Tem nada aqui nao</h1>
+                  )
+                )}
+              </div>
+
+              <div style={{ display: "flex", flexWrap: "wrap" }}></div>
+            </ScrollableContainer>
+          </MainContainer>
+        </>
+      ) : (
+        <ShowButton onClick={hideComponent}>
+          <img src={RightArrow} alt="" />
+        </ShowButton>
+      )}
+    </>
   );
 }
 

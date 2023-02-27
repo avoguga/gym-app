@@ -16,6 +16,10 @@ export const StyledLoader = styled(LoadingOverlay)`
     height: 500px;
   }
   @media (min-width: 1500px) {
+    width: 1200px;
+    height: 600px;
+  }
+  @media (min-width: 1900px) {
     width: 1500px;
     height: 800px;
   }
@@ -38,6 +42,11 @@ export const ImgContainer = styled.div`
   }
 
   @media (min-width: 1500px) {
+    width: 1100px;
+    height: 600px;
+  }
+
+  @media (min-width: 1900px) {
     width: 1500px;
     height: 800px;
   }
@@ -57,6 +66,9 @@ export const SendWorkoutButton = styled.button`
   height: 50px;
   border: none;
   @media (min-width: 1500px) {
+    margin-left: 450px;
+  }
+  @media (min-width: 1900px) {
     margin-left: 660px;
   }
   margin-left: 370px;

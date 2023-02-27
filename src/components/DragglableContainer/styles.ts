@@ -20,6 +20,7 @@ export const DraggableButton = styled.button`
   cursor: pointer;
   position: relative;
   bottom: 30px;
+  right: 5px;
   :hover {
     background-color: #ff9a9a;
     border-radius: 50%;

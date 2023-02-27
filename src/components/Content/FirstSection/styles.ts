@@ -113,3 +113,36 @@ export const UploadedImgs = styled.img`
   width: 100px;
   height: 60px;
 `;
+
+export const HideButton = styled.button`
+  border: none;
+  background-color: #222;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  top: 350px;
+  right: 370px;
+  width: 30px;
+  height: 100px;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  img{
+    width: 20px;
+  }
+`;
+
+export const ShowButton = styled.button`
+  border: none;
+  background-color: #222;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  top: 350px;
+  right: 0px;
+  height: 100px;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  img{
+    width: 30px;
+  }
+`;
