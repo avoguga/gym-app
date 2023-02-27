@@ -13,18 +13,33 @@ export const Container = styled.div`
 
 export const DraggableButton = styled.button`
   visibility:  ${props => props.disabled ? "hidden" : "visible"};
-  width: 15px;
-  border-radius: 200px;
-  background-color: #FF0000;
-  padding-top: 10px;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
   position: relative;
-  bottom: 20px;
-  left: 42px;
+  bottom: 30px;
   :hover {
     background-color: #ff9a9a;
+    border-radius: 50%;
+  }
+  ::before,
+  ::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 2px;
+    background-color: #FF0000;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  ::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
 `;
+
 
 
 export const Girar = styled.div`
