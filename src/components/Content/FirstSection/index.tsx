@@ -23,11 +23,12 @@ import {
   updateMetadata,
   getMetadata,
 } from "firebase/storage";
-import { storage } from "../../../firebase";
+import { storage, db } from "../../../firebase";
 import Lupa from "../../../assets/magnifier-glass_icon-icons.com_71148.svg";
 import buttonElements from "./buttonElements";
 import RightArrow from "../../../assets/left-arrow-svgrepo-com.svg";
 import LeftArrow from "../../../assets/right-arrow-svgrepo-com.svg";
+import { collection, doc, setDoc, onSnapshot } from "firebase/firestore";
 
 gsap.registerPlugin(DragRotate);
 
@@ -60,20 +61,20 @@ function FirstSection({
   const [buttonElementsArray, setButtonsElementsArray] =
     useState(buttonElements);
 
-  const [visible, setVisible] = useState(3);
+  const [visible, setVisible] = useState(-3);
 
   const hideComponent = () => {
     setIsVisible(!isVisible);
   };
 
   const showMoreImgs = () => {
-    setVisible((prevValue) => prevValue + 3);
+    setVisible((prevValue) => prevValue - 3)
   };
 
   const showLessImgs = () => {
     setVisible((prevValue) => {
-      if (prevValue <= 3) return prevValue;
-      return prevValue - 3;
+      if (prevValue <= -3) return prevValue;
+      return prevValue + 3;
     });
   };
 
@@ -83,7 +84,6 @@ function FirstSection({
 
     const storageRef = ref(storage, `images/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -98,7 +98,11 @@ function FirstSection({
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          const gymWebRef = collection(db, "gym-web");
           setImgUrl(url);
+          setDoc(doc(gymWebRef, "changeTimestamp"), {
+            timestamp: Date.now(),
+          });
         });
       }
     );
@@ -129,45 +133,6 @@ function FirstSection({
     if (!selectedFileByDrop) return;
     updateUploads();
   }, [selectedFileByDrop]);
-
-  // useEffect(() => {
-  //   caches.open("imgs").then((cache) => {
-  //     cache.matchAll().then((res) => {
-  //       res.forEach((img) => {
-  //         img.blob().then((blob) => {
-  //           const url = URL.createObjectURL(blob);
-  //           setCacheUrlsArray((prev) => [...prev, url]);
-  //         });
-  //       });
-  //     });
-  //   });
-
-  //   const storageImgRef = ref(storage, `images/`);
-  //   if (cacheUrlsArray.length < 0) {
-  //     listAll(storageImgRef)
-  //       .then((res) => {
-  //         let promises = res.items.map((imageRef) => getDownloadURL(imageRef));
-  //         Promise.all(promises).then((urls) => {
-  //           caches.open("imgs").then((cache) => {
-  //             cache.addAll(urls);
-  //             cache.matchAll().then((res) => {
-  //               res.forEach((img) => {
-  //                 setCacheUrlsArray((prev) => [...prev, img.url]);
-  //               });
-  //             });
-  //           });
-  //           setImgUrlArray(urls);
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     cacheUrlsArray.forEach((url) => {
-  //       setImgUrlArray((prev) => [...prev, url]);
-  //     });
-  //   }
-  // }, []);
 
   useEffect(() => {
     caches.open("imgs").then((cache) => {
@@ -273,7 +238,7 @@ function FirstSection({
                       marginLeft: "10px",
                     }}
                   >
-                    {imgUrlArray.slice(0, visible).map((urls, index) => (
+                    {imgUrlArray.slice(visible).map((urls, index) => (
                       <UploadedImgsButton onClick={() => setImgUrl(urls)}>
                         <UploadedImgs src={urls} key={index} alt="" />
                       </UploadedImgsButton>
