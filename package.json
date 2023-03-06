@@ -28,7 +28,8 @@
     "react-draggable": "^4.4.5",
     "react-dropzone": "^14.2.2",
     "react-loading-overlay-ts": "^2.0.0",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "tsc": "^2.0.4"
   },
   "devDependencies": {
     "@types/gsap": "^3.0.0",
