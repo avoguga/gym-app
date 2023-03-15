@@ -35,7 +35,7 @@ import {
 
 import { useToast } from '@chakra-ui/react';
 
-export default function SecondSection({
+export default function FirstSection({
   imgUrl,
   progress,
   draggable,

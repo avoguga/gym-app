@@ -32,7 +32,7 @@ import { collection, doc, setDoc, onSnapshot } from "firebase/firestore";
 
 gsap.registerPlugin(DragRotate);
 
-function FirstSection({
+function SecondSection({
   imgUrl,
   setImgUrl,
   imgUrlArray,
@@ -359,4 +359,4 @@ function FirstSection({
   );
 }
 
-export default FirstSection;
+export default SecondSection;
