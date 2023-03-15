@@ -27,8 +27,7 @@ import {
 import { storage, db } from "../../../firebase";
 import Lupa from "../../../assets/magnifier-glass_icon-icons.com_71148.svg";
 import buttonElements from "./buttonElements";
-import RightArrow from "../../../assets/left-arrow-svgrepo-com.svg";
-import LeftArrow from "../../../assets/right-arrow-svgrepo-com.svg";
+import Arrow from "../../../assets/arrow.png";
 import { collection, doc, setDoc, onSnapshot } from "firebase/firestore";
 
 gsap.registerPlugin(DragRotate);
@@ -206,7 +205,14 @@ function SecondSection({
       {isVisible ? (
         <>
           <HideButton onClick={hideComponent}>
-            <img src={LeftArrow} alt="" />
+            <img
+              src={Arrow}
+              alt="Retrair menu"
+              style={{
+                filter: "invert(1)",
+                width: "20px",
+              }}
+            />
           </HideButton>
           <MainContainer id="test">
             <ScrollableContainer>
@@ -240,7 +246,9 @@ function SecondSection({
                     setIsSavedBackgroundVisible(!isSavedBackgroundVisible)
                   }
                 >
-                  {isSavedBackgroundVisible ? "Esconder planos de fundo salvos" : "Mostrar planos de fundo salvos"}
+                  {isSavedBackgroundVisible
+                    ? "Esconder planos de fundo salvos"
+                    : "Mostrar planos de fundo salvos"}
                 </ShowSavedBackgroudButton>
                 {!isSavedBackgroundVisible ? null : (
                   <div>
@@ -252,11 +260,16 @@ function SecondSection({
                           marginLeft: "10px",
                         }}
                       >
-                        {imgUrlArray.slice(visible).map((urls: string, index: number) => (
-                          <UploadedImgsButton key={index} onClick={() => setImgUrl(urls)}>
-                            <UploadedImgs src={urls} key={index} alt="" />
-                          </UploadedImgsButton>
-                        ))}
+                        {imgUrlArray
+                          .slice(visible)
+                          .map((urls: string, index: number) => (
+                            <UploadedImgsButton
+                              key={index}
+                              onClick={() => setImgUrl(urls)}
+                            >
+                              <UploadedImgs src={urls} key={index} alt="" />
+                            </UploadedImgsButton>
+                          ))}
                       </div>
                     </div>
                     <div>
@@ -369,7 +382,15 @@ function SecondSection({
         </>
       ) : (
         <ShowButton onClick={hideComponent}>
-          <img src={RightArrow} alt="" />
+          <img
+            src={Arrow}
+            alt="Expandir menu"
+            style={{
+              filter: "invert(1)",
+              transform: "rotate(180deg)",
+              width: "20px",
+            }}
+          />
         </ShowButton>
       )}
     </>
