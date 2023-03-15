@@ -1,7 +1,7 @@
 import { MainContainer } from "./styles";
 import { useState, createRef, useRef } from "react";
-import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
+import FirstSection from "./FirstSection";
 import Draggable from "react-draggable";
 import RePosition from "../DragglableContainer/re-position";
 import { DraggableButton } from "./styles";
@@ -29,10 +29,19 @@ export function Content() {
     refs[index] = createRef();
   });
 
-  const removeHalter = (index) => {
-    const halterRef: any = refs[index];
-    if (halterRef && halterRef.current) {
-      halterRef.current.remove();
+  const removeEquipment = (index) => {
+    const equipmentRef: any = refs[index];
+    if (equipmentRef && equipmentRef.current) {
+      equipmentRef.current.remove();
+    }
+  };
+
+  const removeAllEquipments = () => {
+    for (const key in refs) {
+      const equipmentRef = refs[key];
+      if (equipmentRef && equipmentRef.current) {
+        equipmentRef.current.remove();
+      }
     }
   };
 
@@ -46,7 +55,7 @@ export function Content() {
               isDisable={isDisable}
             >
               <DraggableButton
-                onClick={() => removeHalter(index)}
+                onClick={() => removeEquipment(index)}
                 disabled={isDisable}
               />
             </RePosition>
@@ -58,7 +67,7 @@ export function Content() {
 
   return (
     <MainContainer>
-      <SecondSection
+      <FirstSection
         imgUrl={imgUrl}
         progress={progres}
         draggable={draggable}
@@ -66,8 +75,9 @@ export function Content() {
         setIsDisable={setIsDisable}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
+        removeAllEquipments={removeAllEquipments}
       />
-      <FirstSection
+      <SecondSection
         draggableImage={draggableImage}
         setDraggableImage={setDraggableImage}
         selectedFileByDrop={selectedFileByDrop}
