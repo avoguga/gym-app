@@ -146,3 +146,18 @@ export const ShowButton = styled.button`
     width: 30px;
   }
 `;
+
+export const ShowSavedBackgroudButton = styled.button`
+  margin: 10px;
+  padding: 10px;
+  background-color: #c90087;
+  color: white;
+  font-size: 18px;
+  border-radius: 40px;
+  width: 300px;
+  height: 70px;
+  border: none;
+  &:hover{
+    background-color: #a60370;
+  }
+`;

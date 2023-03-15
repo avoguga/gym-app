@@ -82,6 +82,9 @@ export const SendWorkoutButton = styled.button<{ isVisible: boolean }>`
   width: 200px;
   height: 50px;
   border: none;
+  &:hover{
+    background-color: #a60370;
+  }
   @media (min-width: 1500px) {
     margin-left: ${(props) => props.isVisible ? "450px" : "650px"};
   }
