@@ -18,7 +18,7 @@ export const StyledLoader = styled(LoadingOverlay)<{ isVisible: boolean }>`
     height: 500px;
   }
   @media (min-width: 1500px) {
-    width: ${(props) => props.isVisible ? "1100px" : "100%"};
+    width: ${(props) => props.isVisible ? "1130px" : "100%"};
     height: 600px;
   }
   @media (min-width: 1900px) {
@@ -41,7 +41,7 @@ export const ImgContainer = styled.div<{ isVisible: boolean }>`
   }
 
   @media (min-width: 1500px) {
-    width: ${(props) => props.isVisible ? "1100px" : "100%"};
+    width: ${(props) => props.isVisible ? "1130px" : "100%"};
     height: 600px;
   }
 

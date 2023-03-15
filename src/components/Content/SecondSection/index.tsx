@@ -204,7 +204,8 @@ function SecondSection({
     <>
       {isVisible ? (
         <>
-          <HideButton onClick={hideComponent}>
+        {/* Caso venha a usar no futuro abaixo tem o botão de Retrair o menu */}
+          {/* <HideButton onClick={hideComponent}>
             <img
               src={Arrow}
               alt="Retrair menu"
@@ -213,7 +214,7 @@ function SecondSection({
                 width: "20px",
               }}
             />
-          </HideButton>
+          </HideButton> */}
           <MainContainer id="test">
             <ScrollableContainer>
               <form>
@@ -381,17 +382,21 @@ function SecondSection({
           </MainContainer>
         </>
       ) : (
-        <ShowButton onClick={hideComponent}>
-          <img
-            src={Arrow}
-            alt="Expandir menu"
-            style={{
-              filter: "invert(1)",
-              transform: "rotate(180deg)",
-              width: "20px",
-            }}
-          />
-        </ShowButton>
+        null
+
+        // Caso venha a usar no futuro abaixo tem o botão de expandir o menu
+
+        // <ShowButton onClick={hideComponent}>
+        //   <img
+        //     src={Arrow}
+        //     alt="Expandir menu"
+        //     style={{
+        //       filter: "invert(1)",
+        //       transform: "rotate(180deg)",
+        //       width: "20px",
+        //     }}
+        //   />
+        // </ShowButton>
       )}
     </>
   );
