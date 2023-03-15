@@ -3,8 +3,8 @@ import { useState, createRef, useRef } from "react";
 import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
 import Draggable from "react-draggable";
-import New from "../DragglableContainer/new";
-import DraggableContainer from "../DragglableContainer";
+import RePosition from "../DragglableContainer/re-position";
+import { DraggableButton } from "./styles";
 
 export function Content() {
   // Hooks
@@ -17,13 +17,11 @@ export function Content() {
   const [aaaa, setAaaa] = useState();
   const [isVisible, setIsVisible] = useState(true);
 
-
   const [imgGeneretedFromDraggableImg, setImgGeneretedFromDraggableImg] =
     useState([]);
 
-
   // const refs = [...Array(100)].map(() => createRef());
-  
+
   const refs = {};
   const dragHalter: any = useRef(refs);
 
@@ -43,23 +41,20 @@ export function Content() {
       {draggableImage.map((obj, index) => (
         <div ref={refs[index]} key={index}>
           <Draggable handle={`#handle${index}`}>
-            <New isDisable={isDisable}>
-              <DraggableContainer
-                img={imgGeneretedFromDraggableImg[index]}
-                dragFunction={() => removeHalter(index)}
-                componentClass={`handle${index}`}
-                isDisable={isDisable}
-                index={index}
+            <RePosition
+              img={imgGeneretedFromDraggableImg[index]}
+              isDisable={isDisable}
+            >
+              <DraggableButton
+                onClick={() => removeHalter(index)}
+                disabled={isDisable}
               />
-            </New>
+            </RePosition>
           </Draggable>
         </div>
       ))}
     </div>
   );
-  
-
- 
 
   return (
     <MainContainer>

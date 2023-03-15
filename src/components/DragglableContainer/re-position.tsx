@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import { PositionableContainer, Position } from "re-position";
 
 interface AppState {
@@ -7,7 +7,7 @@ interface AppState {
 
 
 
-const New = ({ children, isDisable}: any ) => {
+const RePosition = ({ children, isDisable, img}: any ) => {
   const [appState, setAppState] = useState({
     position: {
       left: "100px",
@@ -31,10 +31,15 @@ const New = ({ children, isDisable}: any ) => {
     disabled={isDisable}
     position={position}
     onUpdate={handleUpdate}
+    style={{
+      backgroundImage: `url(${img})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}
   >
     {children}
   </PositionableContainer>
   );
 };
 
-export default New;
+export default RePosition;

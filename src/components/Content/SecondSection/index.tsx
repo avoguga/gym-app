@@ -1,5 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
-import New from "../../DragglableContainer/new";
+import { useEffect, useRef, useState } from "react";
 import {
   ImgContainer,
   ImgTextContainer,
@@ -7,6 +6,7 @@ import {
   SendWorkoutButton,
   UploadedImg,
   StyledLoader,
+  TrashCanIcon,
 } from "./styles";
 import ImgIcon from "../../../assets/img-icon.jpeg";
 import html2canvas from "html2canvas";
@@ -33,7 +33,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import { useToast } from '@chakra-ui/react';
+import { useToast } from "@chakra-ui/react";
 
 export default function FirstSection({
   imgUrl,
@@ -44,7 +44,6 @@ export default function FirstSection({
   isVisible,
   setIsVisible,
 }) {
-
   const toast = useToast();
 
   const [loading, setLoading] = useState(false);
@@ -122,7 +121,7 @@ export default function FirstSection({
             title: `O sistema não pode enviar o treino!`,
             status: "error",
             isClosable: true,
-          })
+          });
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
@@ -131,7 +130,7 @@ export default function FirstSection({
               title: `O treino foi enviado!`,
               status: "success",
               isClosable: true,
-            })
+            });
           });
         }
       );
@@ -196,18 +195,21 @@ export default function FirstSection({
         </ImgContainer>
       </StyledLoader>
 
-      <div style={{}}>
-        {/* <SendWorkoutButton onClick={() => setIsDisable(true)}>
-          ENVIAR TREINO
-        </SendWorkoutButton> */}
-
-        <SendWorkoutButton isVisible={isVisible} onClick={onOpen}>ENVIAR TREINO</SendWorkoutButton>
-
-        <Modal
-          initialFocusRef={initialRef}
-          isOpen={isOpen}
-          onClose={onClose}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
         >
+          <TrashCanIcon onClick={() => setIsVisible(false)} />
+
+          <SendWorkoutButton isVisible={isVisible} onClick={onOpen}>
+            ENVIAR TREINO
+          </SendWorkoutButton>
+        </div>
+
+        <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Dê um nome para o treino!</ModalHeader>
@@ -215,9 +217,13 @@ export default function FirstSection({
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>Nome do treino</FormLabel>
-                <Input ref={initialRef} placeholder="Nome do treino" onChange={(e) => setWorkoutName(e.target.value)}/>
+                <Input
+                  ref={initialRef}
+                  placeholder="Nome do treino"
+                  onChange={(e) => setWorkoutName(e.target.value)}
+                />
               </FormControl>
-{/* 
+              {/* 
               <FormControl mt={4}>
                 <FormLabel>Last name</FormLabel>
                 <Input placeholder="Last name" />
@@ -225,7 +231,11 @@ export default function FirstSection({
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={() => setIsDisable(true)}>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => setIsDisable(true)}
+              >
                 Salvar Treino
               </Button>
               <Button onClick={onClose}>Cancelar</Button>

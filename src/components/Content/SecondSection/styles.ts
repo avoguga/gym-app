@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay-ts";
+import TrashCanClosed from "../../../assets/trash-can.png";
+import TrashCanOpen from "../../../assets/trash-can-open.png";
 
 export const MainContainer = styled.div`
   display: flex;
@@ -54,6 +56,24 @@ export const ImgContainer = styled.div<{ isVisible: boolean }>`
   width: 100%;
   height: 100%;
 `;
+
+// Make a trash icon
+
+export const TrashCanIcon = styled.div`
+  background-image: url(${TrashCanClosed});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  cursor: pointer;
+  &:hover {
+    background-image: url(${TrashCanOpen});
+  }
+`;
+
+
 
 
 export const SendWorkoutButton = styled.button<{ isVisible: boolean }>`
