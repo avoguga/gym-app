@@ -252,8 +252,8 @@ function SecondSection({
                           marginLeft: "10px",
                         }}
                       >
-                        {imgUrlArray.slice(visible).map((urls, index) => (
-                          <UploadedImgsButton onClick={() => setImgUrl(urls)}>
+                        {imgUrlArray.slice(visible).map((urls: string, index: number) => (
+                          <UploadedImgsButton key={index} onClick={() => setImgUrl(urls)}>
                             <UploadedImgs src={urls} key={index} alt="" />
                           </UploadedImgsButton>
                         ))}
