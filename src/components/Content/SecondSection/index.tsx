@@ -135,8 +135,11 @@ function SecondSection({
   };
 
   useEffect(() => {
+    console.log("dale")
     if (!selectedFileByDrop) return;
     updateUploads();
+    console.log("nao dale")
+
   }, [selectedFileByDrop]);
 
   useEffect(() => {
@@ -171,7 +174,8 @@ function SecondSection({
     } else {
       setImgUrlArray(cacheUrlsArray);
     }
-  }, []);
+    console.log("aaaa");
+  }, [selectedFileByDrop]);
 
   useEffect(() => {
     const storageImgRef = ref(storage, `images/`);
@@ -354,7 +358,7 @@ function SecondSection({
                   display: "flex",
                   flexWrap: "wrap",
                   marginBottom: "100px",
-                  height: "500px",
+                  height: "100%",
                   width: "350px",
                 }}
               >
