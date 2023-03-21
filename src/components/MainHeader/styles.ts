@@ -14,6 +14,7 @@ export const HeaderContainer = styled.header<{isDale: boolean}>`
   top: 0px;
   left: 0px;
   right: 0px;
+  z-index: 10;
 `;
 export const FirstSectionDiv = styled.div`
   margin: 10px;
