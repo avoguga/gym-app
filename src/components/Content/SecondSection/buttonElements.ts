@@ -4,6 +4,9 @@ import corda from "../../../assets/corda.png";
 import FaixaElatica from "../../../assets/faixaelastica.png";
 import aaa from "../../../assets/15.png";
 import Caixa from "../../../assets/10.png";
+import Caixa2 from "../../../assets/9.png";
+import Circulo from "../../../assets/circulo.png";
+import Retangulo from "../../../assets/4.png";
 
 
 export default  [
@@ -48,6 +51,24 @@ export default  [
         id: 7,
         name: "CAIXA",
         img: Caixa,
+        function: ""
+    },
+    {
+        id: 7,
+        name: "CAIXA",
+        img: Caixa2,
+        function: ""
+    },
+    {
+        id: 9,
+        name: "CÍRCULO",
+        img: Circulo,
+        function: ""
+    },
+    {
+        id: 10,
+        name: "RETÂNGULO",
+        img: Retangulo,
         function: ""
     },
     

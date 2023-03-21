@@ -1,16 +1,15 @@
 import styled from "styled-components";
+import LoadingOverlay from "react-loading-overlay-ts";
+import TrashCanClosed from "../../../assets/trash-can.png";
+import TrashCanOpen from "../../../assets/trash-can-open.png";
 
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: 100%;
-  width: 380px;
-  background-color: #222;
-  position: fixed;
-  top: 60px;
-  bottom: 0;
-  right: 0;
-  /* media query */
+  width: 100%;
+  padding: 10px;
   @media (max-width: 768px) {
     width: 100%;
     position: relative;
@@ -20,104 +19,104 @@ export const MainContainer = styled.div`
   }
 `;
 
-export const ScrollableContainer = styled.div`
+export const StyledLoader = styled(LoadingOverlay)<{ isVisible: boolean }>`
+  @media (min-width: 960px) {
+    width: ${(props) => props.isVisible ? "960px" : "100%"};
+    height: 500px;
+  }
+  @media (min-width: 1500px) {
+    width: ${(props) => props.isVisible ? "1130px" : "100%"};
+    height: 600px;
+  }
+  @media (min-width: 1900px) {
+    width: ${(props) => props.isVisible ? "1500px" : "100%"};
+    height: 800px;
+  }
+  width: ${(props) => props.isVisible ? "1200px" : "100%"};
+  height: 600px;
+`;
+
+export const ImgContainer = styled.div<{ isVisible: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 10px;
+  background-color: #c90087;
 
-  overflow-y: auto;
-  overflow-x: hidden;
+  @media (min-width: 960px) {
+    width: ${(props) => props.isVisible ? "960px" : "100%"};
+    height: 500px;
+  }
+
+  @media (min-width: 1500px) {
+    width: ${(props) => props.isVisible ? "1130px" : "100%"};
+    height: 600px;
+  }
+
+  @media (min-width: 1900px) {
+    width: ${(props) => props.isVisible ? "1500px" : "100%"};
+    height: 800px;
+  }
+
+  width: 100%;
+  height: 100%;
 `;
 
-export const DragMe = styled.div`
-  height: 100px;
-  width: 100px;
-  background: blue;
-  border-radius: 10px;
-  margin: 50px;
+// Make a trash icon
+
+export const TrashCanIcon = styled.div`
+  background-image: url(${TrashCanClosed});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  cursor: pointer;
+  &:hover {
+    background-image: url(${TrashCanOpen});
+  }
+`;
+
+
+
+
+export const SendWorkoutButton = styled.button<{ isVisible: boolean }>`
+  margin: 10px;
+  background-color: #c90087;
   color: white;
-  font-size: 20px;
+  font-size: 18px;
+  border-radius: 40px;
+  width: 200px;
+  height: 50px;
+  border: none;
+  &:hover{
+    background-color: #a60370;
+  }
+  @media (min-width: 1500px) {
+    margin-left: ${(props) => props.isVisible ? "450px" : "650px"};
+  }
+  @media (min-width: 1900px) {
+    margin-left: ${(props) => props.isVisible ? "650px" : "850px"};
+  }
+  margin-left: ${(props) => props.isVisible ? "370px" : "500px"};
+`;
+
+export const ImgTextContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: auto;
   padding: 10px;
+  border: 1px dotted white;
 `;
 
 export const UploadedImg = styled.img`
-  width: 1000px;
+  width: 100%;
   height: 100%;
 `;
 
 export const Text = styled.p`
   font-size: 16px;
   color: #fff;
-  text-align: center;
-`;
-
-export const DropZone = styled.div`
-  border: 1px dashed #fff;
-  margin-top: 10px;
-  height: 100px;
-  border-radius: 5px;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-export const CreateElButton = styled.button`
-  font-size: 16px;
-  width: 150px;
-  height: 120px;
-  margin: 10px;
-  background-color: #d9d9d9;
-  border-radius: 20px;
-  border: none;
-`;
-
-export const InputIcon = styled.img`
-  height: 1.5rem;
-  width: 1.5rem;
-  padding: 4px;
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  filter: contrast(0%);
-`;
-
-export const EquipsInput = styled.input`
-  height: 35px;
-  width: 325px;
-  padding-left: 1.5rem;
-  border-radius: 30px;
-  background-color: #d9d9d9;
-  border: none;
-  text-indent: 10px;
-  margin: 10px;
-`;
-
-export const UploadButton = styled.button`
-  font-size: 16px;
-  width: 140px;
-  margin-top: 10px;
-`;
-
-export const PreviewImg = styled.img`
-  margin: 10px;
-  width: 150px;
-`;
-
-export const UploadedImgsButton = styled.button`
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-`;
-
-export const UploadedImgs = styled.img`
-  margin: 5px;
-  width: 100px;
-  height: 60px;
 `;
