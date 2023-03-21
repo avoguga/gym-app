@@ -10,6 +10,13 @@ export const MainContainer = styled.div`
   top: 60px;
   bottom: 0;
   right: 0;
+  @media (max-width: 768px) {
+    width: 100%;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
 `;
 
 export const ScrollableContainer = styled.div`
