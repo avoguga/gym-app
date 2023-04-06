@@ -5,7 +5,6 @@ import {
   ThirdSectionDiv,
   Text,
 } from "./styles";
-import UserCard from "../UserCard";
 import { useContext } from "react";
 import { Context } from "../../contexts/AppContext";
 

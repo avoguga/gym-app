@@ -135,11 +135,8 @@ function SecondSection({
   };
 
   useEffect(() => {
-    console.log("dale")
     if (!selectedFileByDrop) return;
     updateUploads();
-    console.log("nao dale")
-
   }, [selectedFileByDrop]);
 
   useEffect(() => {
@@ -174,7 +171,6 @@ function SecondSection({
     } else {
       setImgUrlArray(cacheUrlsArray);
     }
-    console.log("aaaa");
   }, [selectedFileByDrop]);
 
   useEffect(() => {

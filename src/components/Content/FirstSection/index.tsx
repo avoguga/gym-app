@@ -57,6 +57,8 @@ export default function FirstSection({
 
   const imgRef = useRef<HTMLImageElement | null>(null);
 
+  // função para baixar a imagem caso necessário
+
   const downloadImage = (blob, fileName) => {
     const fakeLink = window.document.createElement("a");
     // @ts-ignore
@@ -203,7 +205,7 @@ export default function FirstSection({
             alignItems: "center",
           }}
         >
-          <TrashCanIcon onClick={() => removeAllEquipments() } />
+          <TrashCanIcon onClick={() => removeAllEquipments()} />
 
           <SendWorkoutButton isVisible={isVisible} onClick={onOpen}>
             ENVIAR TREINO

@@ -1,10 +1,9 @@
-import { MainContainer } from "./styles";
-import { useState, createRef, useRef } from "react";
+import { useState, createRef, useRef, useEffect } from "react";
 import SecondSection from "./SecondSection";
 import FirstSection from "./FirstSection";
 import Draggable from "react-draggable";
 import RePosition from "../DragglableContainer/re-position";
-import { DraggableButton } from "./styles";
+import { DraggableButton, MobileContainer, MainContainer } from "./styles";
 
 export function Content() {
   // Hooks
@@ -14,8 +13,16 @@ export function Content() {
   const [imgUrl, setImgUrl] = useState("");
   const [imgUrlArray, setImgUrlArray] = useState([]);
   const [isDisable, setIsDisable] = useState(false);
-  const [aaaa, setAaaa] = useState();
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    navigator.userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)
+    ? setIsMobile(true)
+    : setIsMobile(false);
+  }, [isMobile]);
+  
+
 
   const [imgGeneretedFromDraggableImg, setImgGeneretedFromDraggableImg] =
     useState([]);
@@ -65,7 +72,7 @@ export function Content() {
     </div>
   );
 
-  return (
+  return !isMobile ? (
     <MainContainer>
       <FirstSection
         imgUrl={imgUrl}
@@ -94,6 +101,22 @@ export function Content() {
         setIsVisible={setIsVisible}
       />
     </MainContainer>
+  ) : (
+    <MobileContainer>
+      <img
+        src="https://portalaluno.cesmac.edu.br/FrameHTML/web/app/Edu/PortalEducacional/login/assets/img/logo-responsivo.png"
+        alt="CESMAC"
+        style={{ width: "130px", marginRight: "30px" }}
+      />
+      <h1
+        style={{
+          color: "white",
+          fontSize: "2rem",
+        }}
+      >
+        Este conteúdo só está disponível no desktop{" "}
+      </h1>
+    </MobileContainer>
   );
 }
 
