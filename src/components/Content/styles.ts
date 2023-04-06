@@ -38,8 +38,13 @@ export const DraggableButton = styled.button`
 `;
 export const MobileContainer = styled.main`
   grid-area: CT;
+  width: 95%;
   height: 60%;
   margin-top: 60px;
+  margin-left: 10px;
+  position: relative;
+  top: 0;
+  left: 0;
 
   // Set the background color to #c90087
   background-color: #c90087;
@@ -64,11 +69,8 @@ export const MobileContainer = styled.main`
 
   // Add a min-height to make it look better on mobile
   min-height: 300px;
-  
+
   // make border round and add a border
   border-radius: 20px;
   border: 3px solid #000;
-
-
-
 `;
