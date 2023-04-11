@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: 100%; */
   width: 380px;
   background-color: #222;
   position: fixed;
@@ -73,6 +73,20 @@ export const CreateElButton = styled.button`
   background-color: #d9d9d9;
   border-radius: 20px;
   border: none;
+  /* center itens */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+  }
+
+  img {
+    width: 150px;
+    height: 100px;
+  }
 `;
 
 export const InputIcon = styled.img`
@@ -133,7 +147,7 @@ export const HideButton = styled.button`
   height: 100px;
   border-top-left-radius: 40px;
   border-bottom-left-radius: 40px;
-  img{
+  img {
     width: 20px;
   }
 `;
@@ -149,7 +163,7 @@ export const ShowButton = styled.button`
   height: 100px;
   border-top-left-radius: 40px;
   border-bottom-left-radius: 40px;
-  img{
+  img {
     width: 30px;
   }
 `;
@@ -164,7 +178,7 @@ export const ShowSavedBackgroudButton = styled.button`
   width: 300px;
   height: 70px;
   border: none;
-  &:hover{
+  &:hover {
     background-color: #a60370;
   }
 `;
